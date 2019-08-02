@@ -74,33 +74,21 @@ zuul:
     agile:
       path: /agile/**
       serviceId: agile-service
-    state:
-      path: /state/**
-      serviceId: state-machine-service
-    issue:
-      path: /issue/**
-      serviceId: issue-service
     test-manager:
       path: /test/**
       serviceId: test-manager-service
-    wiki:
-      path: /wiki/**
-      serviceId: wiki-service
     apim:
       path: /apim/**
       serviceId: apim-service
-    foundation:
-      path: /foundation/**
-      serviceId: foundation-service
     knowledge:
       path: /knowledge/**
       serviceId: knowledgebase-service
-    sms:
-      path: /sms/**
-      serviceId: sms-service
     low-code:
       path: /lc/**
       serviceId: low-code-service
+    base-service:
+      path: /base/**
+      serviceId: base-service
   semaphore:
     max-semaphores: 300
   sensitiveHeaders: Cookie,Set-Cookie
