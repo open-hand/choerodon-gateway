@@ -61,6 +61,10 @@ public class AuthenticationHelper {
             checkResponse.setMessage("gateway helper error happened: " + e.toString());
             LOGGER.info("Check permission error", e);
         }
+        //公共接口，设置public header标志，在headerWrapperFilter移除Authorization header
+        if (CheckState.SUCCESS_PUBLIC_ACCESS.equals(checkResponse.getStatus())) {
+            request.setAttribute("isPublic", "true");
+        }
         if (checkResponse.getStatus().getValue() < 300) {
             responseContext.setHttpStatus(HttpStatus.OK);
             LOGGER.debug("Request 200, context: {}", requestContext);

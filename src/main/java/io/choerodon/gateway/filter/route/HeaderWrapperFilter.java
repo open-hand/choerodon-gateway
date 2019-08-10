@@ -30,7 +30,6 @@ public class HeaderWrapperFilter extends ZuulFilter {
 
     private GatewayProperties gatewayHelperProperties;
 
-
     public HeaderWrapperFilter(GatewayProperties gatewayHelperProperties) {
         this.gatewayHelperProperties = gatewayHelperProperties;
     }
@@ -57,9 +56,12 @@ public class HeaderWrapperFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         String token = (String) request.getAttribute(HEADER_JWT);
-        if (StringUtils.isEmpty(token)) {
+        boolean isPublic = Boolean.valueOf((String) request.getAttribute("isPublic"));
+        if (isPublic) {
             //移除Authorization header,防止其他服务解析jwt时报不合法的token
             ctx.setRequest(removeAuthorizationHeader(request));
+        }
+        if (StringUtils.isEmpty(token)) {
             LOGGER.info("Request get empty jwt , request uri: {} method: {}", request.getRequestURI(), request.getMethod());
         } else {
             ctx.addZuulRequestHeader(HEADER_TOKEN, token);
