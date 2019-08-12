@@ -23,7 +23,7 @@
         SELECT imr.source_id
         FROM iam_member_role imr
         INNER JOIN iam_role ir ON imr.role_id = ir.id
-        INNER JOIN iam_role_permission irp ON irp.role_id = ir.id
+        INNER JOIN iam_role_permission irp ON irp.role_code = ir.code
         WHERE imr.source_type = #{sourceType} AND imr.member_id = #{memberId} AND imr.member_type = #{memberType} AND irp.permission_id = #{permissionId}
     </select>
 
