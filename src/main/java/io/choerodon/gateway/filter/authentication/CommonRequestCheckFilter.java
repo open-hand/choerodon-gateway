@@ -5,9 +5,7 @@ import io.choerodon.gateway.domain.CheckState;
 import io.choerodon.gateway.dto.PermissionDTO;
 import io.choerodon.gateway.domain.RequestContext;
 import io.choerodon.gateway.mapper.PermissionMapper;
-import io.choerodon.gateway.util.SourceUtil;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +16,6 @@ import java.util.List;
  */
 @Component
 public class CommonRequestCheckFilter implements HelperFilter {
-
-    private static final String PROJECT_PATH_ID = "project_id";
-
-    private static final String ORG_PATH_ID = "organization_id";
-
-    private final AntPathMatcher matcher = new AntPathMatcher();
 
     private PermissionMapper permissionMapper;
 
@@ -67,59 +59,14 @@ public class CommonRequestCheckFilter implements HelperFilter {
         if (sourceIds.isEmpty()) {
             context.response.setStatus(CheckState.PERMISSION_NOT_PASS);
             context.response.setMessage("No access to this interface");
-        } else if (ResourceLevel.SITE.value().equals(permission.getResourceLevel())) {
+        } else if (ResourceLevel.SITE.value().equals(permission.getResourceLevel()) || ResourceLevel.ORGANIZATION.value().equals(permission.getResourceLevel())) {
             context.response.setStatus(CheckState.SUCCESS_PASS_SITE);
             context.response.setMessage("Have access to this 'site-level' interface, permission: " + context.getPermission());
-        } else if (ResourceLevel.PROJECT.value().equals(permission.getResourceLevel())) {
-            checkProjectPermission(context, sourceIds, permission.getPath());
-        } else if (ResourceLevel.ORGANIZATION.value().equals(permission.getResourceLevel())) {
-            checkOrgPermission(context, sourceIds, permission.getPath());
+        } else {
+            context.response.setStatus(CheckState.PERMISSION_DISABLED_NO_SITE_LEVEL);
+            context.response.setMessage("No 'site-level' permissions are disabled.");
         }
         return true;
-    }
-
-    private void checkProjectPermission(final RequestContext context,
-                                        final List<Long> sourceIds,
-                                        final String matchPath) {
-        Long projectId = SourceUtil.getSourceId(context.getTrueUri(), matchPath, PROJECT_PATH_ID, matcher);
-        if (projectId == null) {
-            context.response.setStatus(CheckState.API_ERROR_PROJECT_ID);
-            context.response.setMessage("Project interface must have 'project_id' in path");
-        } else {
-            Boolean isEnabled = permissionMapper.projectEnabled(projectId);
-            if (isEnabled != null && !isEnabled) {
-                context.response.setStatus(CheckState.PERMISSION_DISABLED_PROJECT);
-                context.response.setMessage("The project has been disabled, projectId: " + projectId);
-            } else if (sourceIds.stream().anyMatch(t -> t.equals(projectId))) {
-                context.response.setStatus(CheckState.SUCCESS_PASS_PROJECT);
-                context.response.setMessage("Have access to this 'project-level' interface, permission: " + context.getPermission());
-            } else {
-                context.response.setStatus(CheckState.PERMISSION_NOT_PASS_PROJECT);
-                context.response.setMessage("No access to this this project, projectId: " + projectId);
-            }
-        }
-    }
-
-    private void checkOrgPermission(final RequestContext context,
-                                    final List<Long> sourceIds,
-                                    final String matchPath) {
-        Long orgId = SourceUtil.getSourceId(context.getTrueUri(), matchPath, ORG_PATH_ID, matcher);
-        if (orgId == null) {
-            context.response.setStatus(CheckState.API_ERROR_ORG_ID);
-            context.response.setMessage("Organization interface must have 'organization_id' in path");
-        } else {
-            Boolean isEnabled = permissionMapper.organizationEnabled(orgId);
-            if (isEnabled != null && !isEnabled) {
-                context.response.setStatus(CheckState.PERMISSION_DISABLED_ORG);
-                context.response.setMessage("The organization has been disabled, organizationId: " + orgId);
-            } else if (sourceIds.stream().anyMatch(t -> t.equals(orgId))) {
-                context.response.setStatus(CheckState.SUCCESS_PASS_ORG);
-                context.response.setMessage("Have access to this 'organization-level' interface, permission: " + context.getPermission());
-            } else {
-                context.response.setStatus(CheckState.PERMISSION_NOT_PASS_ORG);
-                context.response.setMessage("No access to this this organization, organizationId: " + orgId);
-            }
-        }
     }
 
 }

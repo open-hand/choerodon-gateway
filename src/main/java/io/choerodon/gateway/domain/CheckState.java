@@ -105,6 +105,11 @@ public enum CheckState {
     PERMISSION_DISABLED_ORG(412, "error.permission.organizationDisabled"),
 
     /**
+     * 单租户下非平台层权限禁用
+     */
+    PERMISSION_DISABLED_NO_SITE_LEVEL(413, "error.permission.noSiteLevel"),
+
+    /**
      * 访问过于频繁
      */
     RATE_LIMIT_NOT_PASS(301, "error.visit.frequent"),
