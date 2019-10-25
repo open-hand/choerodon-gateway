@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="io.choerodon.gateway.mapper.PermissionMapper">
+
+    <resultMap id="Permission" type="io.choerodon.gateway.dto.PermissionDTO">
+        <id column="id" property="id"/>
+        <result property="within" column="is_within" jdbcType="BOOLEAN"/>
+        <result property="loginAccess" column="is_login_access" jdbcType="BOOLEAN"/>
+        <result property="publicAccess" column="is_public_access" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <select id="selectPermissionByMethodAndService"
+            resultMap="Permission">
+        SELECT
+        id,code,path,method,is_public_access,is_login_access,is_within,resource_level
+        FROM
+        iam_permission
+        WHERE
+        service_code = #{service} AND method = #{method}
+    </select>
+
+    <select id="selectSourceIdsByUserIdAndPermission" resultType="java.lang.Long">
+        SELECT imr.source_id
+        FROM iam_member_role imr
+        INNER JOIN iam_role ir ON imr.role_id = ir.id
+        INNER JOIN iam_role_permission irp ON irp.role_code = ir.code
+        INNER JOIN iam_permission ip on ip.code = irp.permission_code
+        WHERE imr.source_type = #{sourceType} AND imr.member_id = #{memberId}
+        AND imr.member_type = #{memberType} AND ip.id = #{permissionId}
+    </select>
+
+    <select id="projectEnabled" resultType="java.lang.Boolean">
+        SELECT is_enabled FROM fd_project WHERE id = #{sourceId}
+    </select>
+
+    <select id="organizationEnabled" resultType="java.lang.Boolean">
+        SELECT is_enabled FROM fd_organization WHERE id = #{sourceId}
+    </select>
+
+    <select id="selectMenuCodeByPermissionCode" resultType="java.lang.String">
+        SELECT
+        CODE
+        FROM
+        iam_menu_b
+        WHERE
+        CODE IN (
+        SELECT
+        menu_code
+        FROM
+        iam_menu_permission
+        WHERE
+        permission_code = #{permissionCode}
+        )
+    </select>
+</mapper>

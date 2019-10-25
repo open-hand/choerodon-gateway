@@ -1,0 +1,128 @@
+package io.choerodon.gateway.dto;
+
+import io.choerodon.mybatis.entity.BaseDTO;
+
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Table(name = "iam_permission")
+public class PermissionDTO extends BaseDTO implements Serializable {
+
+    private static final long serialVersionUID = -4108102602163313984L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String code;
+
+    private String path;
+
+    private String method;
+
+    @Column(name = "is_public_access")
+    private Boolean publicAccess;
+
+    @Column(name = "is_login_access")
+    private Boolean loginAccess;
+
+    @Column(name = "is_within")
+    private Boolean within;
+
+    private String resourceLevel;
+
+    public PermissionDTO() {
+    }
+
+    public PermissionDTO(String path) {
+        this.path = path;
+    }
+
+    public PermissionDTO(String code, String path, String method, Boolean publicAccess, Boolean loginAccess, Boolean within, String resourceLevel) {
+        this.code = code;
+        this.path = path;
+        this.method = method;
+        this.publicAccess = publicAccess;
+        this.loginAccess = loginAccess;
+        this.within = within;
+        this.resourceLevel = resourceLevel;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public Boolean getPublicAccess() {
+        return publicAccess;
+    }
+
+    public void setPublicAccess(Boolean publicAccess) {
+        this.publicAccess = publicAccess;
+    }
+
+    public Boolean getLoginAccess() {
+        return loginAccess;
+    }
+
+    public void setLoginAccess(Boolean loginAccess) {
+        this.loginAccess = loginAccess;
+    }
+
+    public Boolean getWithin() {
+        return within;
+    }
+
+    public void setWithin(Boolean within) {
+        this.within = within;
+    }
+
+    public String getResourceLevel() {
+        return resourceLevel;
+    }
+
+    public void setResourceLevel(String resourceLevel) {
+        this.resourceLevel = resourceLevel;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    @Override
+    public String toString() {
+        return "PermissionDTO{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", path='" + path + '\'' +
+                ", method='" + method + '\'' +
+                ", publicAccess=" + publicAccess +
+                ", loginAccess=" + loginAccess +
+                ", within=" + within +
+                ", resourceLevel='" + resourceLevel + '\'' +
+                '}';
+    }
+}

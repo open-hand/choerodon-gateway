@@ -1,0 +1,32 @@
+spring:
+  cloud:
+    bus:
+      enabled: false
+  sleuth:
+    stream:
+      enabled: false
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - io.choerodon.mybatis.MybatisMapperAutoConfiguration
+  cache:
+    multi:
+      l1:
+        enabled: true
+        type: caffeine
+      l2:
+        enabled: true
+        type: redis
+hystrix:
+  stream:
+    queue:
+      enabled: false
+eureka:
+  client:
+    enabled: false
+choerodon:
+  swagger:
+    skip:
+      service: register-server, api-gateway, gateway-helper, oauth-server, config-server, event-store-service
+
