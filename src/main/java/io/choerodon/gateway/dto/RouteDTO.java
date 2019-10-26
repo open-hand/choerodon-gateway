@@ -1,10 +1,10 @@
 package io.choerodon.gateway.dto;
 
-import io.choerodon.mybatis.entity.BaseDTO;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import io.choerodon.mybatis.entity.BaseDTO;
 
 @Table(name = "FD_ROUTE")
 public class RouteDTO extends BaseDTO {
@@ -15,6 +15,11 @@ public class RouteDTO extends BaseDTO {
     private String backendPath;
     private String frontendPath;
 
+    private String routeId;
+
+    private Boolean stripPrefix;
+
+    private String sensitiveHeaders;
 
     public Long getId() {
         return id;
@@ -46,5 +51,29 @@ public class RouteDTO extends BaseDTO {
 
     public void setFrontendPath(String frontendPath) {
         this.frontendPath = frontendPath;
+    }
+
+    public Boolean getStripPrefix() {
+        return stripPrefix;
+    }
+
+    public void setStripPrefix(Boolean stripPrefix) {
+        this.stripPrefix = stripPrefix;
+    }
+
+    public String getSensitiveHeaders() {
+        return sensitiveHeaders;
+    }
+
+    public void setSensitiveHeaders(String sensitiveHeaders) {
+        this.sensitiveHeaders = sensitiveHeaders;
+    }
+
+    public String getRouteId() {
+        return routeId;
+    }
+
+    public void setRouteId(String routeId) {
+        this.routeId = routeId;
     }
 }

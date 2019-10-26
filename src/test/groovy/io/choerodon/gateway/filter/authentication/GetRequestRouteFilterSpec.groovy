@@ -4,8 +4,8 @@ import io.choerodon.gateway.domain.CheckRequest
 import io.choerodon.gateway.domain.CheckResponse
 import io.choerodon.gateway.domain.CheckState
 import io.choerodon.gateway.domain.RequestContext
-import org.springframework.cloud.config.client.ZuulRoute
-import org.springframework.cloud.config.helper.HelperZuulRoutesProperties
+import io.choerodon.gateway.helper.HelperZuulRoutesMemory
+import org.springframework.cloud.netflix.zuul.filters.ZuulProperties.ZuulRoute
 import spock.lang.Specification
 
 class GetRequestRouteFilterSpec extends Specification {
@@ -28,7 +28,7 @@ class GetRequestRouteFilterSpec extends Specification {
 
     def "test run"() {
         given: ''
-        def properties = new HelperZuulRoutesProperties()
+        def properties = new HelperZuulRoutesMemory()
         properties.setRoutes(new HashMap<String, ZuulRoute>(1))
         def getRequestRouteFilter = new GetRequestRouteFilter(properties)
         def context = new RequestContext(new CheckRequest(null, "/zuul/iam/test", "method"),

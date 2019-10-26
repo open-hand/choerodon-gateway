@@ -2,8 +2,8 @@ package io.choerodon.gateway.filter.authentication;
 
 import io.choerodon.gateway.domain.CheckState;
 import io.choerodon.gateway.domain.RequestContext;
-import org.springframework.cloud.config.client.ZuulRoute;
-import org.springframework.cloud.config.helper.HelperZuulRoutesProperties;
+import io.choerodon.gateway.helper.HelperZuulRoutesMemory;
+import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
@@ -22,10 +22,10 @@ public class GetRequestRouteFilter implements HelperFilter {
 
     private final AntPathMatcher matcher = new AntPathMatcher();
 
-    private HelperZuulRoutesProperties helperZuulRoutesProperties;
+    private HelperZuulRoutesMemory zuulRoutesMemory;
 
-    public GetRequestRouteFilter(HelperZuulRoutesProperties helperZuulRoutesProperties) {
-        this.helperZuulRoutesProperties = helperZuulRoutesProperties;
+    public GetRequestRouteFilter(HelperZuulRoutesMemory zuulRoutesMemory) {
+        this.zuulRoutesMemory = zuulRoutesMemory;
     }
 
     @Override
@@ -47,11 +47,11 @@ public class GetRequestRouteFilter implements HelperFilter {
 
         }
         //根据请求uri获取zuulRoute
-        ZuulRoute route = getRoute(requestUri, helperZuulRoutesProperties.getRoutes());
+        ZuulProperties.ZuulRoute route = getRoute(requestUri, zuulRoutesMemory.getRoutes());
         if (route == null) {
             context.response.setStatus(CheckState.PERMISSION_SERVICE_ROUTE);
             context.response.setMessage("This request mismatch any routes, uri: "
-                    + requestUri + " , all routes: " + helperZuulRoutesProperties.getRoutes().values());
+                    + requestUri + " , all routes: " + zuulRoutesMemory.getRoutes().values());
             return false;
         } else {
             final String trueUri = getRequestTruePath(requestUri, route.getPath());
@@ -71,9 +71,9 @@ public class GetRequestRouteFilter implements HelperFilter {
         return "/" + matcher.extractPathWithinPattern(routePath, uri);
     }
 
-    private ZuulRoute getRoute(final String requestUri,
-                               final Map<String, ZuulRoute> routeMap) {
-        for (ZuulRoute zuulRoute : routeMap.values()) {
+    private ZuulProperties.ZuulRoute getRoute(final String requestUri,
+                                              final Map<String, ZuulProperties.ZuulRoute> routeMap) {
+        for (ZuulProperties.ZuulRoute zuulRoute : routeMap.values()) {
             if (matcher.match(zuulRoute.getPath(), requestUri)) {
                 return zuulRoute;
             }

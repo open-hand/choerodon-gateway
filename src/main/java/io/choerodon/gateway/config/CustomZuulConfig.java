@@ -1,20 +1,12 @@
 package io.choerodon.gateway.config;
 
-import java.util.Arrays;
-import java.util.List;
-
-import io.choerodon.gateway.helper.AuthenticationHelper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.cloud.config.client.MemoryRouteLocator;
-import org.springframework.cloud.config.client.RouterOperator;
 import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.jwt.crypto.sign.MacSigner;
@@ -24,8 +16,15 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.util.Arrays;
+import java.util.List;
+
 import io.choerodon.gateway.filter.route.GateWayHelperFilter;
 import io.choerodon.gateway.filter.route.HeaderWrapperFilter;
+import io.choerodon.gateway.helper.AuthenticationHelper;
+import io.choerodon.gateway.helper.HelperZuulRoutesMemory;
+import io.choerodon.gateway.mapper.RouteMapper;
+import io.choerodon.gateway.routelocator.MemoryRouteLocator;
 
 /**
  * 自定义configuration配置类
@@ -35,22 +34,23 @@ import io.choerodon.gateway.filter.route.HeaderWrapperFilter;
 @Configuration
 @EnableConfigurationProperties(GatewayProperties.class)
 public class CustomZuulConfig {
+
+    private RouteMapper routeMapper;
+
     private List<String> allowedOrigins;
 
-    public CustomZuulConfig(@Value("#{T(java.util.Arrays).asList('${choerodon.gateway.allowed.origin:*}')}") List<String> allowedOrigins) {
+    public CustomZuulConfig(@Value("#{T(java.util.Arrays).asList('${choerodon.gateway.allowed.origin:*}')}") List<String> allowedOrigins,
+                            RouteMapper routeMapper) {
         this.allowedOrigins = allowedOrigins;
+        this.routeMapper = routeMapper;
     }
 
     @Bean
-    public RouteLocator memoryRouterOperator(ServerProperties server, ZuulProperties zuulProperties, DispatcherServletPath dispatcherServletPath) {
-        return new MemoryRouteLocator(dispatcherServletPath.getPrefix(), zuulProperties);
+    public RouteLocator memoryRouterOperator(ZuulProperties zuulProperties, DispatcherServletPath dispatcherServletPath,
+                                             HelperZuulRoutesMemory zuulRoutesMemory) {
+        return new MemoryRouteLocator(dispatcherServletPath.getPrefix(), zuulProperties, routeMapper, zuulRoutesMemory);
     }
 
-    @Bean(name = "handRouterOperator")
-    public RouterOperator routerOperator(ApplicationEventPublisher publisher,
-                                         RouteLocator routeLocator) {
-        return new RouterOperator(publisher, routeLocator);
-    }
 
     /**
      * 声明GateWayHelperFilter
