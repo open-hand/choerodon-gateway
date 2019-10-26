@@ -1,9 +1,9 @@
 package io.choerodon.gateway.filter.authentication;
 
-import io.choerodon.gateway.dto.PermissionDTO;
 import io.choerodon.gateway.domain.RequestContext;
 import io.choerodon.gateway.domain.TranceSpan;
-import org.springframework.cloud.config.client.ZuulRoute;
+import io.choerodon.gateway.dto.PermissionDTO;
+import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import rx.Observable;
@@ -37,7 +37,7 @@ public class CollectSpanFilter implements HelperFilter {
 
     @Override
     public boolean run(RequestContext context) {
-        ZuulRoute zuulRoute = context.getRoute();
+        ZuulProperties.ZuulRoute zuulRoute = context.getRoute();
         PermissionDTO permission = context.getPermission();
         String serviceId = zuulRoute.getServiceId();
         String method = context.request.method;

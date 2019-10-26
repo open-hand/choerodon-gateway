@@ -2,7 +2,7 @@ package io.choerodon.gateway.domain;
 
 import io.choerodon.core.oauth.CustomUserDetails;
 import io.choerodon.gateway.dto.PermissionDTO;
-import org.springframework.cloud.config.client.ZuulRoute;
+import org.springframework.cloud.netflix.zuul.filters.ZuulProperties.ZuulRoute;
 
 public class RequestContext {
 

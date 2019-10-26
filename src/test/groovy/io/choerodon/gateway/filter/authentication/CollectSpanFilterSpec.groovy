@@ -2,9 +2,9 @@ package io.choerodon.gateway.filter.authentication
 
 import io.choerodon.gateway.domain.CheckRequest
 import io.choerodon.gateway.domain.CheckResponse
-import io.choerodon.gateway.dto.PermissionDTO
 import io.choerodon.gateway.domain.RequestContext
-import org.springframework.cloud.config.client.ZuulRoute
+import io.choerodon.gateway.dto.PermissionDTO
+import org.springframework.cloud.netflix.zuul.filters.ZuulProperties.ZuulRoute
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.data.redis.core.ValueOperations
 import spock.lang.Specification
