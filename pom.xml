@@ -187,7 +187,11 @@
             <version>2.2</version>
             <scope>test</scope>
         </dependency>
-
+        <!-- config server -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <finalName>app</finalName>
