@@ -35,6 +35,8 @@ public class AddJwtFilter implements HelperFilter {
     @Override
     public boolean run(RequestContext context) {
         try {
+            // 设置routeRule，灰度发布用
+            context.getCustomUserDetails().setRouteRuleCode(context.getRouteRuleCode());
             String token = objectMapper.writeValueAsString(context.getCustomUserDetails());
             String jwt = "Bearer " + JwtHelper.encode(token, jwtSigner).getEncoded();
             context.response.setJwt(jwt);

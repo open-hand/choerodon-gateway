@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static io.choerodon.core.variable.RequestVariableHolder.HEADER_JWT;
+import static io.choerodon.core.variable.RequestVariableHolder.HEADER_ROUTE_RULE;
 import static io.choerodon.core.variable.RequestVariableHolder.HEADER_TOKEN;
 
 /**
@@ -48,6 +49,8 @@ public class AuthenticationHelper {
         RequestContext requestContext = new RequestContext(new CheckRequest(parse(request),
                 request.getRequestURI(), request.getMethod().toLowerCase()), new CheckResponse());
 
+        // 设置routeRuleCode
+        requestContext.setRouteRuleCode(request.getHeader(HEADER_ROUTE_RULE));
         CheckResponse checkResponse = requestContext.response;
         ResponseContext responseContext = new ResponseContext();
         try {

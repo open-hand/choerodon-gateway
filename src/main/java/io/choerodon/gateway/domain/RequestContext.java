@@ -18,6 +18,8 @@ public class RequestContext {
 
     private String trueUri;
 
+    private String routeRuleCode;
+
     private CustomUserDetails customUserDetails;
 
     public RequestContext(CheckRequest request, CheckResponse builder) {
@@ -63,6 +65,14 @@ public class RequestContext {
 
     public void setCustomUserDetails(CustomUserDetails customUserDetails) {
         this.customUserDetails = customUserDetails;
+    }
+
+    public String getRouteRuleCode() {
+        return routeRuleCode;
+    }
+
+    public void setRouteRuleCode(String routeRuleCode) {
+        this.routeRuleCode = routeRuleCode;
     }
 
     @Override
