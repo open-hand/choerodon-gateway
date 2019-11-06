@@ -91,9 +91,13 @@ public class MemoryRouteLocator extends SimpleRouteLocator implements Refreshabl
         zuulRoute.setId(route.getRouteId());
         zuulRoute.setServiceId(route.getServiceCode());
         zuulRoute.setPath(route.getBackendPath());
-        zuulRoute.setStripPrefix(route.getStripPrefix());
-        Set<String> sensitiveHeaders = new HashSet<>(Arrays.asList(route.getSensitiveHeaders().split(",")));
-        zuulRoute.setSensitiveHeaders(sensitiveHeaders);
+        // 平滑升级，避免stripPrefix为null的情况
+        boolean stripPrefix = route.getStripPrefix() == null || route.getStripPrefix();
+        zuulRoute.setStripPrefix(stripPrefix);
+        if (route.getSensitiveHeaders() != null) {
+            Set<String> sensitiveHeaders = new HashSet<>(Arrays.asList(route.getSensitiveHeaders().split(",")));
+            zuulRoute.setSensitiveHeaders(sensitiveHeaders);
+        }
         return zuulRoute;
     }
 }
