@@ -38,7 +38,7 @@ public class AddJwtFilter implements HelperFilter {
             String token = objectMapper.writeValueAsString(context.getCustomUserDetails());
             String jwt = "Bearer " + JwtHelper.encode(token, jwtSigner).getEncoded();
             context.response.setJwt(jwt);
-            context.response.setRouteRuleCode(context.getRouteRuleCode());
+            context.response.setRouteRuleCode(context.getCustomUserDetails().getRouteRuleCode());
             return true;
         } catch (JsonProcessingException e) {
             context.response.setStatus(CheckState.EXCEPTION_GATEWAY_HELPER);
