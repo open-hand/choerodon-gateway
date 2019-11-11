@@ -1,8 +1,9 @@
 package io.choerodon.gateway.domain;
 
+import org.springframework.cloud.netflix.zuul.filters.ZuulProperties.ZuulRoute;
+
 import io.choerodon.core.oauth.CustomUserDetails;
 import io.choerodon.gateway.dto.PermissionDTO;
-import org.springframework.cloud.netflix.zuul.filters.ZuulProperties.ZuulRoute;
 
 public class RequestContext {
 
@@ -17,8 +18,6 @@ public class RequestContext {
     private ZuulRoute route;
 
     private String trueUri;
-
-    private String routeRuleCode;
 
     private CustomUserDetails customUserDetails;
 
@@ -65,14 +64,6 @@ public class RequestContext {
 
     public void setCustomUserDetails(CustomUserDetails customUserDetails) {
         this.customUserDetails = customUserDetails;
-    }
-
-    public String getRouteRuleCode() {
-        return routeRuleCode;
-    }
-
-    public void setRouteRuleCode(String routeRuleCode) {
-        this.routeRuleCode = routeRuleCode;
     }
 
     @Override
