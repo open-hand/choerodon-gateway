@@ -1,11 +1,6 @@
 package io.choerodon.gateway.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.choerodon.core.oauth.CustomUserDetails;
-import io.choerodon.gateway.config.GatewayProperties;
-import io.choerodon.gateway.domain.CheckState;
-import io.choerodon.gateway.domain.CustomUserDetailsWithResult;
-import io.choerodon.gateway.service.GetUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -20,6 +15,12 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+
+import io.choerodon.core.oauth.CustomUserDetails;
+import io.choerodon.gateway.config.GatewayProperties;
+import io.choerodon.gateway.domain.CheckState;
+import io.choerodon.gateway.domain.CustomUserDetailsWithResult;
+import io.choerodon.gateway.service.GetUserDetailsService;
 
 @Service
 public class GetUserDetailsServiceImpl implements GetUserDetailsService {
@@ -100,6 +101,9 @@ public class GetUserDetailsServiceImpl implements GetUserDetailsService {
                 user.setTimeZone((String) map.get("timeZone"));
                 if (map.get("email") != null) {
                     user.setEmail((String) map.get("email"));
+                }
+                if (map.get("routeRuleCode") != null) {
+                    user.setRouteRuleCode((String) map.get("routeRuleCode"));
                 }
             }
             if (isClientOnly) {

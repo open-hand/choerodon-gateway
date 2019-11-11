@@ -8,6 +8,8 @@ public class CheckResponse {
 
     private CheckState status;
 
+    private String routeRuleCode;
+
     public String getJwt() {
         return jwt;
     }
@@ -32,12 +34,21 @@ public class CheckResponse {
         this.status = status;
     }
 
+    public String getRouteRuleCode() {
+        return routeRuleCode;
+    }
+
+    public void setRouteRuleCode(String routeRuleCode) {
+        this.routeRuleCode = routeRuleCode;
+    }
+
     @Override
     public String toString() {
         return "CheckResponse{" +
                 "jwt='" + jwt + '\'' +
                 ", message='" + message + '\'' +
-                ", checkState=" + status +
+                ", status=" + status +
+                ", routeRuleCode='" + routeRuleCode + '\'' +
                 '}';
     }
 }
