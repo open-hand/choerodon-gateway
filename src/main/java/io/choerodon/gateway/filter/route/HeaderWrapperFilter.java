@@ -8,8 +8,7 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static io.choerodon.core.variable.RequestVariableHolder.HEADER_JWT;
-import static io.choerodon.core.variable.RequestVariableHolder.HEADER_TOKEN;
+import static io.choerodon.core.variable.RequestVariableHolder.*;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 import io.choerodon.gateway.config.GatewayProperties;
 
@@ -66,6 +65,11 @@ public class HeaderWrapperFilter extends ZuulFilter {
             if (gatewayHelperProperties.isEnabledJwtLog()) {
                 LOGGER.info("Request get jwt , request uri: {} method: {} JWT: {}", request.getRequestURI(), request.getMethod(), token);
             }
+        }
+        String routeRuleCode = (String) request.getAttribute(HEADER_ROUTE_RULE);
+        if (!StringUtils.isEmpty(routeRuleCode)) {
+            LOGGER.info("Request set route-rule-code to header , request uri: {} method: {} code: {}", request.getRequestURI(), request.getMethod(), routeRuleCode);
+            ctx.addZuulRequestHeader(HEADER_ROUTE_RULE, routeRuleCode);
         }
         return null;
     }
