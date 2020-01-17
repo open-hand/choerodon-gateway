@@ -95,6 +95,9 @@ zuul:
     market:
       path: /market/**
       serviceId: market-service
+    bus:
+      path: /basebus/**
+      serviceId: base-service-bus
   semaphore:
     max-semaphores: 300
   sensitiveHeaders: Cookie,Set-Cookie
