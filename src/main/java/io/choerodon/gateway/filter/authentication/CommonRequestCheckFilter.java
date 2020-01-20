@@ -4,10 +4,7 @@ import io.choerodon.core.iam.ResourceLevel;
 import io.choerodon.gateway.domain.CheckState;
 import io.choerodon.gateway.dto.PermissionDTO;
 import io.choerodon.gateway.domain.RequestContext;
-import io.choerodon.gateway.dto.ProjectDTO;
 import io.choerodon.gateway.mapper.PermissionMapper;
-import io.choerodon.gateway.mapper.ProjectMapper;
-import io.choerodon.gateway.mapper.UserMapper;
 import io.choerodon.gateway.util.SourceUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -28,14 +25,8 @@ public class CommonRequestCheckFilter implements HelperFilter {
 
     private PermissionMapper permissionMapper;
 
-    private ProjectMapper projectMapper;
-
-    private UserMapper userMapper;
-
-    public CommonRequestCheckFilter(PermissionMapper permissionMapper,ProjectMapper projectMapper,UserMapper userMapper) {
+    public CommonRequestCheckFilter(PermissionMapper permissionMapper) {
         this.permissionMapper = permissionMapper;
-        this.projectMapper = projectMapper;
-        this.userMapper = userMapper;
     }
 
     @Override
@@ -51,7 +42,7 @@ public class CommonRequestCheckFilter implements HelperFilter {
     @Override
     public boolean run(RequestContext context) {
         PermissionDTO permission = context.getPermission();
-        Long memberId = null;
+        Long memberId;
         String memberType;
         List<Long> sourceIds = new ArrayList<>();
         if (context.getCustomUserDetails().getClientId() != null) {
@@ -78,25 +69,19 @@ public class CommonRequestCheckFilter implements HelperFilter {
             context.response.setStatus(CheckState.SUCCESS_PASS_ORG);
             context.response.setMessage("Have access to this 'organization-level' interface, permission: " + context.getPermission());
         } else if (ResourceLevel.PROJECT.value().equals(permission.getResourceLevel())) {
-            checkProjectPermission(context, sourceIds, permission.getPath(),memberId);
+            checkProjectPermission(context, sourceIds, permission.getPath());
         }
         return true;
     }
 
-    private Boolean checkProjectPermission(final RequestContext context,
+    private void checkProjectPermission(final RequestContext context,
                                         final List<Long> sourceIds,
-                                        final String matchPath,
-                                        final Long memberId) {
+                                        final String matchPath) {
         Long projectId = SourceUtil.getSourceId(context.getTrueUri(), matchPath, PROJECT_PATH_ID, matcher);
         if (projectId == null) {
             context.response.setStatus(CheckState.API_ERROR_PROJECT_ID);
             context.response.setMessage("Project interface must have 'project_id' in path");
         } else {
-            ProjectDTO projectDTO = projectMapper.selectByPrimaryKey(projectId);
-            boolean isOrgAdmin = userMapper.isOrgAdministrator(projectDTO.getOrganizationId(), memberId);
-            if(isOrgAdmin){
-                return false;
-            }
             Boolean isEnabled = permissionMapper.projectEnabled(projectId);
             if (isEnabled != null && !isEnabled) {
                 context.response.setStatus(CheckState.PERMISSION_DISABLED_PROJECT);
@@ -109,7 +94,6 @@ public class CommonRequestCheckFilter implements HelperFilter {
                 context.response.setMessage("No access to this this project, projectId: " + projectId);
             }
         }
-        return true;
     }
 
 }
