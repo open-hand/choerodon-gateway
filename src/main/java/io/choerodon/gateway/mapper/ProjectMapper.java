@@ -19,4 +19,5 @@ public interface ProjectMapper extends Mapper<ProjectDTO> {
      * @return 项目类别
      */
     List<String> getCategoriesByProjId(@Param("project_id") Long projectId);
+
 }
