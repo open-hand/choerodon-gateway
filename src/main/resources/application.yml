@@ -77,30 +77,15 @@ zuul:
     test-manager:
       path: /test/**
       serviceId: test-manager-service
-    apim:
-      path: /apim/**
-      serviceId: apim-service
     knowledge:
       path: /knowledge/**
       serviceId: knowledgebase-service
-    low-code:
-      path: /lc/**
-      serviceId: low-code-service
     base-service:
       path: /base/**
       serviceId: base-service
     buzz:
       path: /buzz/**
       serviceId: buzz-service
-    market:
-      path: /market/**
-      serviceId: market-service
-    bus:
-      path: /basebus/**
-      serviceId: base-service-bus
-    plus:
-      path: /baseplus/**
-      serviceId: base-service-plus
   semaphore:
     max-semaphores: 300
   sensitiveHeaders: Cookie,Set-Cookie
