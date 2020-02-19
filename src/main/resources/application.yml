@@ -86,6 +86,9 @@ zuul:
     buzz:
       path: /buzz/**
       serviceId: buzz-service
+    hrds-qa:
+      path: /rdqam/**
+      serviceId: hrds-qa
   semaphore:
     max-semaphores: 300
   sensitiveHeaders: Cookie,Set-Cookie
