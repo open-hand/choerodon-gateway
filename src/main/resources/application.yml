@@ -92,6 +92,9 @@ zuul:
     hrds-code-repo:
       path: /rducm/**
       serviceId: hrds-code-repo
+    hrds-doc-repo:
+      path: /rdudm/**
+      serviceId: hrds-doc-repo
   semaphore:
     max-semaphores: 300
   sensitiveHeaders: Cookie,Set-Cookie
