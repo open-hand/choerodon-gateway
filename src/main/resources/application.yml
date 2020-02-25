@@ -89,6 +89,9 @@ zuul:
     hrds-qa:
       path: /rdqam/**
       serviceId: hrds-qa
+    hrds-code-repo:
+      path: /rducm/**
+      serviceId: hrds-code-repo
   semaphore:
     max-semaphores: 300
   sensitiveHeaders: Cookie,Set-Cookie
