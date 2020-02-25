@@ -1,5 +1,5 @@
 server:
-  port: 8070
+  port: 8080
 spring:
   application:
     name: api-gateway
@@ -17,7 +17,7 @@ management:
     health:
       show-details: ALWAYS
   server:
-    port: 8071
+    port: 8081
   endpoints:
     web:
       exposure:
