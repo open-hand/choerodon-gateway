@@ -21,7 +21,6 @@ import org.springframework.retry.annotation.EnableRetry;
 @EnableDiscoveryClient
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class GatewayApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(GatewayApplication.class, args);
     }
