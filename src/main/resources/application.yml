@@ -82,7 +82,7 @@ zuul:
       serviceId: knowledgebase-service
     base-service:
       path: /base/**
-      serviceId: base-service-plus
+      serviceId: base-service
     buzz:
       path: /buzz/**
       serviceId: buzz-service
