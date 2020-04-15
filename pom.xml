@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.choerodon</groupId>
         <artifactId>choerodon-framework-parent</artifactId>
-        <version>0.16.1-SNAPSHOT</version>
+        <version>0.16.2-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -14,18 +14,17 @@
     <description>Demo project for Spring Boot</description>
 
     <dependencies>
-        <!-- 数据库驱动 -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
 
-        <!-- 依赖的服务 -->
         <dependency>
             <groupId>org.hzero</groupId>
             <artifactId>hzero-gateway</artifactId>
         </dependency>
 
+        <!-- 数据库驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
