@@ -18,12 +18,16 @@
         <dependency>
             <groupId>org.hzero</groupId>
             <artifactId>hzero-gateway</artifactId>
-        </dependency>
-
-        <!-- 数据库驱动 -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hzero.starter</groupId>
+                    <artifactId>hzero-starter-hitoa</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.hzero.starter</groupId>
+                    <artifactId>hzero-starter-dynamic-route</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
