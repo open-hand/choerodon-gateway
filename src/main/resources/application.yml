@@ -12,6 +12,7 @@ spring:
       maximum-pool-size: ${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE:200}
       # 等待连接池分配连接的最大时长（毫秒）
       connection-timeout: ${SPRING_DATASOURCE_CONNECTION_TIMEOUT:30000}
+    driver-class-name: com.mysql.jdbc.Driver
   cache:
     multi:
       l1:
@@ -51,163 +52,163 @@ spring:
       discovery:
         locator:
           enabled: true
-#      default-filters:
-#      - RemoveResponseHeader=X-Frame-Options
+      #      default-filters:
+      #      - RemoveResponseHeader=X-Frame-Options
       routes:
-      - id: hiam
-        uri: lb://hzero-iam
-        predicates:
-        - Path=/iam/**
-        filters:
-        - StripPrefix=1
-#        - name: RequestRateLimiter
-#          args:
-#            redis-rate-limiter.replenishRate: 100
-#            redis-rate-limiter.burstCapacity: 100
-#            redis-rate-limiter.replenishRateMap."user1role1": 1
-#            redis-rate-limiter.burstCapacityMap."user1role1": 1
-#            rate-limiter: "#{@enhancedRedisRateLimiter}"
-#            key-resolver: "#{@userKeyResolver}"
-#            key-resolver: "#{
-#            new org.hzero.gateway.ratelimit.dimension.CombinedKeyResolver(
-#              new org.hzero.gateway.ratelimit.dimension.UserKeyResolver(),
-#              new org.hzero.gateway.ratelimit.dimension.RoleKeyResolver()
-#            )}"
-      - id: hoth
-        uri: lb://hzero-oauth
-        predicates:
-        - Path=/oauth/**
-        filters:
-        - PreserveHostHeader
-      - id: hcnf
-        uri: lb://hzero-config
-        predicates:
-        - Path=/hcnf/**
-        filters:
-        - StripPrefix=1
-      - id: hwgr
-        uri: lb://hzero-swagger
-        predicates:
-        - Path=/swagger/**
-        filters:
-        - StripPrefix=1
-      - id: hagd
-        uri: lb://hzero-asgard
-        predicates:
-        - Path=/hagd/**
-        filters:
-        - StripPrefix=1
-      - id: hsgp
-        uri: lb://hzero-governance
-        predicates:
-        - Path=/hsgp/**
-        filters:
-        - StripPrefix=1
-      - id: hpfm
-        uri: lb://hzero-platform
-        predicates:
-        - Path=/hpfm/**
-        filters:
-        - StripPrefix=1
-      - id: hfle
-        uri: lb://hzero-file
-        predicates:
-        - Path=/hfle/**
-        filters:
-        - StripPrefix=1
-      - id: hmsg
-        uri: lb://hzero-message
-        predicates:
-        - Path=/hmsg/**
-        filters:
-        - StripPrefix=1
-      - id: hsdr
-        uri: lb://hzero-scheduler
-        predicates:
-        - Path=/hsdr/**
-        filters:
-        - StripPrefix=1
-      - id: himp
-        uri: lb://hzero-import
-        predicates:
-        - Path=/himp/**
-        filters:
-        - StripPrefix=1
-      - id: hitf
-        uri: lb://hzero-interface
-        predicates:
-        - Path=/hitf/**
-        filters:
-        - StripPrefix=1
-#        - name: RequestRateLimiter
-#          args:
-#            redis-rate-limiter.replenishRate: 100
-#            redis-rate-limiter.burstCapacity: 100
-#            redis-rate-limiter.replenishRateMap."url.v1.rest.invoke._namespace-test_serverCode-test_interfaceCode-testrole1": 1
-#            redis-rate-limiter.burstCapacityMap."url.v1.rest.invoke._namespace-test_serverCode-test_interfaceCode-testrole1": 1
-#            rate-limiter: "#{@enhancedRedisRateLimiter}"
+        - id: hiam
+          uri: lb://hzero-iam
+          predicates:
+            - Path=/iam/**
+          filters:
+            - StripPrefix=1
+        #        - name: RequestRateLimiter
+        #          args:
+        #            redis-rate-limiter.replenishRate: 100
+        #            redis-rate-limiter.burstCapacity: 100
+        #            redis-rate-limiter.replenishRateMap."user1role1": 1
+        #            redis-rate-limiter.burstCapacityMap."user1role1": 1
+        #            rate-limiter: "#{@enhancedRedisRateLimiter}"
+        #            key-resolver: "#{@userKeyResolver}"
+        #            key-resolver: "#{
+        #            new org.hzero.gateway.ratelimit.dimension.CombinedKeyResolver(
+        #              new org.hzero.gateway.ratelimit.dimension.UserKeyResolver(),
+        #              new org.hzero.gateway.ratelimit.dimension.RoleKeyResolver()
+        #            )}"
+        - id: hoth
+          uri: lb://hzero-oauth
+          predicates:
+            - Path=/oauth/**
+          filters:
+            - PreserveHostHeader
+        - id: hcnf
+          uri: lb://hzero-config
+          predicates:
+            - Path=/hcnf/**
+          filters:
+            - StripPrefix=1
+        - id: hwgr
+          uri: lb://hzero-swagger
+          predicates:
+            - Path=/swagger/**
+          filters:
+            - StripPrefix=1
+        - id: hagd
+          uri: lb://hzero-asgard
+          predicates:
+            - Path=/hagd/**
+          filters:
+            - StripPrefix=1
+        - id: hsgp
+          uri: lb://hzero-governance
+          predicates:
+            - Path=/hsgp/**
+          filters:
+            - StripPrefix=1
+        - id: hpfm
+          uri: lb://hzero-platform
+          predicates:
+            - Path=/hpfm/**
+          filters:
+            - StripPrefix=1
+        - id: hfle
+          uri: lb://hzero-file
+          predicates:
+            - Path=/hfle/**
+          filters:
+            - StripPrefix=1
+        - id: hmsg
+          uri: lb://hzero-message
+          predicates:
+            - Path=/hmsg/**
+          filters:
+            - StripPrefix=1
+        - id: hsdr
+          uri: lb://hzero-scheduler
+          predicates:
+            - Path=/hsdr/**
+          filters:
+            - StripPrefix=1
+        - id: himp
+          uri: lb://hzero-import
+          predicates:
+            - Path=/himp/**
+          filters:
+            - StripPrefix=1
+        - id: hitf
+          uri: lb://hzero-interface
+          predicates:
+            - Path=/hitf/**
+          filters:
+            - StripPrefix=1
+              #        - name: RequestRateLimiter
+              #          args:
+              #            redis-rate-limiter.replenishRate: 100
+              #            redis-rate-limiter.burstCapacity: 100
+              #            redis-rate-limiter.replenishRateMap."url.v1.rest.invoke._namespace-test_serverCode-test_interfaceCode-testrole1": 1
+              #            redis-rate-limiter.burstCapacityMap."url.v1.rest.invoke._namespace-test_serverCode-test_interfaceCode-testrole1": 1
+              #            rate-limiter: "#{@enhancedRedisRateLimiter}"
             #key-resolver: "#{@userKeyResolver}"
-#            key-resolver: "#{
-#            new org.hzero.gateway.ratelimit.dimension.CombinedKeyResolver(
-#              new org.hzero.gateway.ratelimit.dimension.UrlKeyResolver(\"/v1/{1}/invoke?namespace={2}&serverCode={3}&interfaceCode={4}\"),
-#              new org.hzero.gateway.ratelimit.dimension.RoleKeyResolver()
-#            )}"
-      - id: hwfl
-        uri: lb://hzero-workflow
-        predicates:
-        - Path=/hwfl/**
-        filters:
-        - StripPrefix=1
-      - id: hwfe
-        uri: lb://hzero-workflow-editor
-        predicates:
-        - Path=/hwfe/editor/**
-        filters:
-        - StripPrefix=1
-      - id: hdtt
-        uri: lb://hzero-transfer
-        predicates:
-        - Path=/hdtt/**
-        filters:
-        - StripPrefix=1
-      - id: hdtw
-        uri: lb://hzero-dw
-        predicates:
-        - Path=/hdtw/**
-        filters:
-        - StripPrefix=1
-      - id: hptl
-        uri: lb://hzero-portal
-        predicates:
-        - Path=/hptl/**
-        filters:
-        - StripPrefix=1
-      - id: hrpt
-        uri: lb://hzero-report
-        predicates:
-        - Path=/hrpt/**
-        filters:
-        - StripPrefix=1
-      - id: hwfp
-        uri: lb://hzero-workflow-plus
-        predicates:
-        - Path=/hwfp/**
-        filters:
-        - StripPrefix=1
-      - id: hpay
-        uri: lb://hzero-pay
-        predicates:
-        - Path=/hpay/**
-        filters:
-        - StripPrefix=1
-      - id: hadm
-        uri: lb://hzero-admin
-        predicates:
-        - Path=/hadm/**
-      - id: hap
-        uri: lb://hzero-hap
-        predicates:
-        - Path=/hap/**
+        #            key-resolver: "#{
+        #            new org.hzero.gateway.ratelimit.dimension.CombinedKeyResolver(
+        #              new org.hzero.gateway.ratelimit.dimension.UrlKeyResolver(\"/v1/{1}/invoke?namespace={2}&serverCode={3}&interfaceCode={4}\"),
+        #              new org.hzero.gateway.ratelimit.dimension.RoleKeyResolver()
+        #            )}"
+        - id: hwfl
+          uri: lb://hzero-workflow
+          predicates:
+            - Path=/hwfl/**
+          filters:
+            - StripPrefix=1
+        - id: hwfe
+          uri: lb://hzero-workflow-editor
+          predicates:
+            - Path=/hwfe/editor/**
+          filters:
+            - StripPrefix=1
+        - id: hdtt
+          uri: lb://hzero-transfer
+          predicates:
+            - Path=/hdtt/**
+          filters:
+            - StripPrefix=1
+        - id: hdtw
+          uri: lb://hzero-dw
+          predicates:
+            - Path=/hdtw/**
+          filters:
+            - StripPrefix=1
+        - id: hptl
+          uri: lb://hzero-portal
+          predicates:
+            - Path=/hptl/**
+          filters:
+            - StripPrefix=1
+        - id: hrpt
+          uri: lb://hzero-report
+          predicates:
+            - Path=/hrpt/**
+          filters:
+            - StripPrefix=1
+        - id: hwfp
+          uri: lb://hzero-workflow-plus
+          predicates:
+            - Path=/hwfp/**
+          filters:
+            - StripPrefix=1
+        - id: hpay
+          uri: lb://hzero-pay
+          predicates:
+            - Path=/hpay/**
+          filters:
+            - StripPrefix=1
+        - id: hadm
+          uri: lb://hzero-admin
+          predicates:
+            - Path=/hadm/**
+        - id: hap
+          uri: lb://hzero-hap
+          predicates:
+            - Path=/hap/**
 
 server:
   undertow:
