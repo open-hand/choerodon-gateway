@@ -30,7 +30,7 @@ spring:
       max-file-size: 30MB
       max-request-size: 30MB
   redis:
-    host: ${SPRING_REDIS_HOST:redis.hzero.org}
+    host: ${SPRING_REDIS_HOST:localhost}
     port: ${SPRING_REDIS_PORT:6379}
     database: ${SPRING_REDIS_DATABASE:4}
     jedis:
@@ -227,11 +227,6 @@ server:
     # HTTP POST请求最大的大小
     # 默认0，无限制，可设置10M
     max-http-post-size: 10485760
-
-mybatis:
-  mapperLocations: classpath*:/mapper/*.xml
-  configuration:
-    mapUnderscoreToCamelCase: true
 
 feign:
   hystrix:
