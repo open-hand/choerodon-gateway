@@ -51,6 +51,8 @@ spring:
       discovery:
         locator:
           enabled: true
+#      default-filters:
+#      - RemoveResponseHeader=X-Frame-Options
       routes:
       - id: hiam
         uri: lb://hzero-iam
@@ -58,6 +60,19 @@ spring:
         - Path=/iam/**
         filters:
         - StripPrefix=1
+#        - name: RequestRateLimiter
+#          args:
+#            redis-rate-limiter.replenishRate: 100
+#            redis-rate-limiter.burstCapacity: 100
+#            redis-rate-limiter.replenishRateMap."user1role1": 1
+#            redis-rate-limiter.burstCapacityMap."user1role1": 1
+#            rate-limiter: "#{@enhancedRedisRateLimiter}"
+#            key-resolver: "#{@userKeyResolver}"
+#            key-resolver: "#{
+#            new org.hzero.gateway.ratelimit.dimension.CombinedKeyResolver(
+#              new org.hzero.gateway.ratelimit.dimension.UserKeyResolver(),
+#              new org.hzero.gateway.ratelimit.dimension.RoleKeyResolver()
+#            )}"
       - id: hoth
         uri: lb://hzero-oauth
         predicates:
@@ -124,6 +139,19 @@ spring:
         - Path=/hitf/**
         filters:
         - StripPrefix=1
+#        - name: RequestRateLimiter
+#          args:
+#            redis-rate-limiter.replenishRate: 100
+#            redis-rate-limiter.burstCapacity: 100
+#            redis-rate-limiter.replenishRateMap."url.v1.rest.invoke._namespace-test_serverCode-test_interfaceCode-testrole1": 1
+#            redis-rate-limiter.burstCapacityMap."url.v1.rest.invoke._namespace-test_serverCode-test_interfaceCode-testrole1": 1
+#            rate-limiter: "#{@enhancedRedisRateLimiter}"
+            #key-resolver: "#{@userKeyResolver}"
+#            key-resolver: "#{
+#            new org.hzero.gateway.ratelimit.dimension.CombinedKeyResolver(
+#              new org.hzero.gateway.ratelimit.dimension.UrlKeyResolver(\"/v1/{1}/invoke?namespace={2}&serverCode={3}&interfaceCode={4}\"),
+#              new org.hzero.gateway.ratelimit.dimension.RoleKeyResolver()
+#            )}"
       - id: hwfl
         uri: lb://hzero-workflow
         predicates:
