@@ -208,6 +208,10 @@ spring:
         uri: lb://hzero-hap
         predicates:
         - Path=/hap/**
+      - id: hdm
+        uri: lb://data-migration
+        predicates:
+        - Path=/hdm/**
 
 server:
   undertow:
