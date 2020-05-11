@@ -61,7 +61,6 @@ env:
     # 数据库密码
     SPRING_DATASOURCE_PASSWORD: password
 
-
     # 忽略jwt的url
     CHOERODON_RESOURCE_JWT_IGNORE: /favicon.ico
 
@@ -73,6 +72,31 @@ env:
 
     #用户默认密码
     CHOERODON_USER_DEFAULT_PASSWORD: abcd1234
+
+    # 项目级API是否必须检查项目参数
+    HZERO_GATEWAY_FILTER_COMMON_REQUEST_CHECK_PROJECT: true
+    # 组织级API是否必须检查组织参数
+    HZERO_GATEWAY_FILTER_COMMON_REQUEST_CHECK_ORGANIZATION: true
+    # 是否启用标准的权限检查
+    HZERO_GATEWAY_FILTER_COMMON_REQUEST_ENABLE: true
+    # 是否统计API访问情况
+    HZERO_GATEWAY_FILTER_COLLECT_SPAN_ENABLED: false
+    # 是否打印 JWT
+    HZERO_GATEWAY_HELPER_ENABLE_JWT_LOG: false
+    EUREKA_DEFAULT_ZONE: http://dev.hzero.org:8000/eureka/
+    EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
+    LOG_LEVEL: info
+    JAVA_OPTS: >
+      -Xms1024m
+      -Xmx1536m
+
+    ## Skywalking 配置参数
+    # SKYWALKING_OPTS: >-
+    #   -javaagent:/agent/skywalking-agent.jar
+    #   -Dskywalking.agent.application_code=asgard-service
+    #   -Dskywalking.agent.sample_n_per_3_secs=-1
+    #   -Dskywalking.collector.backend_service=oap.skywalking:11800
+
 
 ## Liveness 和 Readiness 探针相关配置
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
