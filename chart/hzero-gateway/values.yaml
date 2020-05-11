@@ -54,6 +54,9 @@ env:
     # 注册服务地址
     EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://register-server:8000/eureka/
 
+    # 网关地址
+    CHOERODON_GATEWAY_URL: http://api.example.com
+
     # 数据库连接地址
     SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/hzero_platform?useUnicode=true&characterEncoding=utf-8&useSSL=false&useInformationSchema=true&remarks=true&serverTimezone=Asia/Shanghai
     # 数据库用户名
@@ -66,9 +69,6 @@ env:
 
     # 清理permission表中的旧接口和role_permission表中角色和权限层级不匹配的脏数据
     CHOERODON_CLEANPERMISSION: false
-
-    # 网关地址
-    CHOERODON_GATEWAY_URL: http://api.example.com
 
     #用户默认密码
     CHOERODON_USER_DEFAULT_PASSWORD: abcd1234
