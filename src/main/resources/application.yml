@@ -212,6 +212,24 @@ spring:
         uri: lb://data-migration
         predicates:
         - Path=/hdm/**
+      - id: knowledge
+        uri: lb://knowledge-service
+        predicates:
+        - Path=/knowledge/**
+        filters:
+        - StripPrefix=1
+      - id: agile
+        uri: lb://agile-service
+        predicates:
+        - Path=/agile/**
+        filters:
+        - StripPrefix=1
+      - id: test-manager
+        uri: lb://test-manager-service
+        predicates:
+        - Path=/test/**
+        filters:
+        - StripPrefix=1
 
 server:
   undertow:
