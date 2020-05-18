@@ -213,7 +213,7 @@ spring:
         predicates:
         - Path=/hdm/**
       - id: knowledge
-        uri: lb://knowledge-service
+        uri: lb://knowledgebase-service
         predicates:
         - Path=/knowledge/**
         filters:
