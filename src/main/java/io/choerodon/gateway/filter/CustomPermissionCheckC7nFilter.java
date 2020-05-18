@@ -8,7 +8,7 @@ import org.hzero.gateway.helper.entity.RequestContext;
 import org.hzero.gateway.helper.service.CustomPermissionCheckService;
 import org.hzero.gateway.helper.util.UrlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import io.choerodon.gateway.infra.dto.ProjectUserDTO;
@@ -19,7 +19,7 @@ import io.choerodon.gateway.infra.mapper.ProjectUserMapper;
  * @date 2020/5/15
  * @description
  */
-@Service
+@Component
 public class CustomPermissionCheckC7nFilter implements CustomPermissionCheckService {
     @Autowired
     private ProjectUserMapper projectUserMapper;
