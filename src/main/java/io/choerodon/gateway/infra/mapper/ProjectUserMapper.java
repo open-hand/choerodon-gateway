@@ -9,4 +9,5 @@ import io.choerodon.mybatis.common.BaseMapper;
  * @description
  */
 public interface ProjectUserMapper extends BaseMapper<ProjectUserDTO> {
+
 }
