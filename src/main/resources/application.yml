@@ -230,6 +230,12 @@ spring:
         - Path=/test/**
         filters:
         - StripPrefix=1
+      - id: devops-service
+        uri: lb://devops-service
+        predicates:
+        - Path=/devops/**
+        filters:
+        - StripPrefix=1
 
 server:
   undertow:
