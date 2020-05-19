@@ -26,8 +26,10 @@ spring:
           l2-spec: expiration=300
   servlet:
     multipart:
-      max-file-size: 30MB
-      max-request-size: 30MB
+      enabled: true
+      max-request-size: 200MB
+      # ci 流水线功能 中上传软件包需要这么大的限制
+      max-file-size: 200MB
   redis:
     host: ${SPRING_REDIS_HOST:redis.hzero.org}
     port: ${SPRING_REDIS_PORT:6379}
