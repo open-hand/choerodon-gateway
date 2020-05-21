@@ -141,6 +141,12 @@ spring:
         - Path=/hitf/**
         filters:
         - StripPrefix=1
+      - id: hrds-code-repo
+        uri: lb://hrds-code-repo
+        predicates:
+        - Path=/rducm/**
+        filters:
+        - StripPrefix=1
 #        - name: RequestRateLimiter
 #          args:
 #            redis-rate-limiter.replenishRate: 100
