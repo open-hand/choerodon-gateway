@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="io.choerodon.gateway.infra.mapper.ProjectUserMapper">
+
+
+    <!-- 返回的 source_id 代表 成员分配的角色有此API的权限，返回角色的租户 -->
+    <select id="selectSourceIdsByMemberAndRole" resultType="java.lang.Long">
+        <bind name="now" value="@java.time.LocalDate@now().toString()" />
+        SELECT
+        imr.source_id
+        FROM iam_member_role imr
+        JOIN iam_role ir ON (imr.role_id = ir.id and ir.is_enabled = 1)
+        JOIN iam_role_permission irp ON (irp.role_id = ir.id AND irp.type= 'PS')
+        JOIN fd_project_user fpu ON fpu.MEMBER_ROLE_ID = imr.id
+        AND fpu.PROJECT_ID = #{projectId}
+        <!-- 限制权限集 -->
+        JOIN iam_menu_permission imp ON imp.menu_id = irp.permission_id
+        JOIN iam_menu im ON (im.id = imp.menu_id and im.type = 'ps' and im.h_enabled_flag = 1)
+        WHERE
+        imr.member_id = #{memberId}
+        AND imr.member_type = #{memberType}
+        AND (
+        imr.start_date_active IS NULL
+        OR imr.start_date_active &lt;= #{now}
+        )
+        AND (
+        imr.end_date_active IS NULL
+        OR imr.end_date_active >= #{now}
+        )
+        AND imp.permission_code = #{permissionCode}
+        <if test="sourceType != null">
+            AND imr.source_type = #{sourceType}
+        </if>
+        <!-- checkCurrentRole=true 时就无法跨租户了 -->
+        <if test="checkCurrentRole">
+            AND ir.id IN
+            <foreach collection="roleIds" open="(" separator="," close=")" item="roleId">
+                #{roleId}
+            </foreach>
+        </if>
+        <!-- 角色权限创建及继承标识判断以及当前登录角色判断 -->
+        AND (irp.h_create_flag = 'Y' OR irp.h_inherit_flag = 'Y')
+    </select>
+</mapper>
