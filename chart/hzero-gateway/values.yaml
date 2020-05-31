@@ -49,7 +49,7 @@ env:
     # Redis 端口
     SPRING_REDIS_PORT: 6379
     # Redis db
-    SPRING_REDIS_DATABASE: 2
+    SPRING_REDIS_DATABASE: 4
 
     # 注册服务地址
     EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://register-server:8000/eureka/
