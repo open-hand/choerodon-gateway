@@ -69,7 +69,7 @@ spring:
         predicates:
           - Path=/base/**
         filters:
-          - RewritePath=/base/(?<segment>/?.*), /choerodon/$\{segment}
+          - StripPrefix=1
 #        - name: RequestRateLimiter
 #          args:
 #            redis-rate-limiter.replenishRate: 100
