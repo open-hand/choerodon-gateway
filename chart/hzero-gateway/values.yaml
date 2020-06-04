@@ -79,7 +79,7 @@ env:
     HZERO_GATEWAY_HELPER_ENABLE_JWT_LOG: false
 
     LOG_LEVEL: info
-    JAVA_OPTS: >
+    JAVA_OPTS: >-
       -Xms1024m
       -Xmx1536m
 
