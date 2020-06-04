@@ -48,11 +48,9 @@ env:
     SPRING_REDIS_HOST: localhost
     # Redis 端口
     SPRING_REDIS_PORT: 6379
-    # Redis db
+    # Redis db 固定数据不可更改
     SPRING_REDIS_DATABASE: 4
 
-    # 注册服务地址
-    EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://register-server:8000/eureka/
 
     # 网关地址
     CHOERODON_GATEWAY_URL: http://api.example.com
@@ -64,7 +62,9 @@ env:
     # 数据库密码
     SPRING_DATASOURCE_PASSWORD: password
 
-    EUREKA_DEFAULT_ZONE: http://dev.hzero.org:8000/eureka/
+    # 注册服务地址
+    EUREKA_DEFAULT_ZONE: http://register-server:8000/eureka/
+    
     EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
 
     # 项目级API是否必须检查项目参数
