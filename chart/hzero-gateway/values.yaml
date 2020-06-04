@@ -64,14 +64,8 @@ env:
     # 数据库密码
     SPRING_DATASOURCE_PASSWORD: password
 
-    # 忽略jwt的url
-    CHOERODON_RESOURCE_JWT_IGNORE: /favicon.ico
-
-    # 清理permission表中的旧接口和role_permission表中角色和权限层级不匹配的脏数据
-    CHOERODON_CLEANPERMISSION: false
-
-    #用户默认密码
-    CHOERODON_USER_DEFAULT_PASSWORD: abcd1234
+    EUREKA_DEFAULT_ZONE: http://dev.hzero.org:8000/eureka/
+    EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
 
     # 项目级API是否必须检查项目参数
     HZERO_GATEWAY_FILTER_COMMON_REQUEST_CHECK_PROJECT: true
@@ -83,8 +77,7 @@ env:
     HZERO_GATEWAY_FILTER_COLLECT_SPAN_ENABLED: false
     # 是否打印 JWT
     HZERO_GATEWAY_HELPER_ENABLE_JWT_LOG: false
-    EUREKA_DEFAULT_ZONE: http://dev.hzero.org:8000/eureka/
-    EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
+
     LOG_LEVEL: info
     JAVA_OPTS: >
       -Xms1024m
@@ -127,7 +120,7 @@ resources:
 ## 插件相关配置
 plugins:
   # skywalking agent 镜像地址
-  skywalkingAgentImage: registry.cn-shanghai.aliyuncs.com/c7n/skywalking-agent:6.5.0
+  skywalkingAgentImage: registry.cn-shanghai.aliyuncs.com/c7n/skywalking-agent:6.6.0
 
 ## service 相关设置
 ## ref: http://kubernetes.io/docs/user-guide/services/
