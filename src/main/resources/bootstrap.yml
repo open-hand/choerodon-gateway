@@ -32,9 +32,9 @@ eureka:
     # 以IP注册到注册中心
     preferIpAddress: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:true}
     # 指定时间内没有数据上报可能会被清理掉
-    leaseRenewalIntervalInSeconds: 10
+    leaseRenewalIntervalInSeconds: 3
     #  服务状态上报间隔
-    leaseExpirationDurationInSeconds: 5
+    leaseExpirationDurationInSeconds: 9
     # 服务的一些元数据信息
     metadata-map:
       VERSION: 1.3.0.RELEASE
@@ -43,7 +43,7 @@ eureka:
       # 注册中心地址
       defaultZone: ${EUREKA_DEFAULT_ZONE:http://dev.hzero.org:8000/eureka}
     # 拉取服务列表间隔时间
-    registryFetchIntervalSeconds: 5
+    registryFetchIntervalSeconds: 3
     disable-delta: true
 ribbon:
 #  负载均衡器服务列表缓存
