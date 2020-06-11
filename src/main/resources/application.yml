@@ -47,6 +47,8 @@ spring:
         max-wait: ${SPRING_REDIS_POOL_MAX_WAIT:5000}
   cloud:
     gateway:
+      default-filters:
+      - SetRequestHeader=H-Request-From, gateway
       filter:
         secure-headers:
           frame-options: ${SECURE_HEADERS_FRAME_OPTIONS:allow-from http://hzeronf.saas.hand-china.com}
