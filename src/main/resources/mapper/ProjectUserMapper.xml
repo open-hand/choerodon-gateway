@@ -17,8 +17,8 @@
         JOIN iam_menu_permission imp ON imp.menu_id = irp.permission_id
         JOIN iam_menu im ON (im.id = imp.menu_id and im.type = 'ps' and im.h_enabled_flag = 1)
         WHERE
-        imr.member_id = #{memberId}
-        AND imr.member_type = #{memberType}
+        imr.member_id = #{query.memberId}
+        AND imr.member_type = #{query.memberType}
         AND (
         imr.start_date_active IS NULL
         OR imr.start_date_active &lt;= #{now}
@@ -27,14 +27,14 @@
         imr.end_date_active IS NULL
         OR imr.end_date_active >= #{now}
         )
-        AND imp.permission_code = #{permissionCode}
-        <if test="sourceType != null">
-            AND imr.source_type = #{sourceType}
+        AND imp.permission_code = #{query.permissionCode}
+        <if test="query.sourceType != null">
+            AND imr.source_type = #{query.sourceType}
         </if>
         <!-- checkCurrentRole=true 时就无法跨租户了 -->
-        <if test="checkCurrentRole">
+        <if test="query.checkCurrentRole">
             AND ir.id IN
-            <foreach collection="roleIds" open="(" separator="," close=")" item="roleId">
+            <foreach collection="query.roleIds" open="(" separator="," close=")" item="roleId">
                 #{roleId}
             </foreach>
         </if>
