@@ -15,6 +15,6 @@ import io.choerodon.mybatis.common.BaseMapper;
  */
 public interface ProjectUserMapper extends BaseMapper<ProjectUserDTO> {
 
-    List<Long> selectSourceIdsByMemberAndRole(PermissionCheckDTO query, @Param("projectId") Long projectId);
+    List<Long> selectSourceIdsByMemberAndRole(@Param("query") PermissionCheckDTO query, @Param("projectId") Long projectId);
 
 }
