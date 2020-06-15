@@ -75,13 +75,17 @@ public class CustomPermissionCheckC7nFilter implements CustomPermissionCheckServ
         }
         PermissionCheckDTO queryDTO = new PermissionCheckDTO(memberId, memberType, tenantId, roleIds, permissionCode, sourceType, checkCurrentRole);
         LOGGER.debug("Project Common request check: {}", queryDTO);
-        List<Long> list = projectUserMapper.selectSourceIdsByMemberAndRole(queryDTO, projectId);
         CheckState checkState;
-        if (CollectionUtils.isEmpty(list)) {
-            checkState = CheckState.newState(405, PROJECT_PERMISSION_CODE_FAILED, PROJECT_PERMISSION_NAME_FAILED);
-        } else {
+        // 组织管理员跳过项目层权限校验
+        if (projectUserMapper.isOrgAdministrator(tenantId, memberId)) {
             checkState = CheckState.newState(202, PROJECT_PERMISSION_CODE_SUCCESS, PROJECT_PERMISSION_NAME_SUCCESS);
-
+        } else {
+            List<Long> list = projectUserMapper.selectSourceIdsByMemberAndRole(queryDTO, projectId);
+            if (CollectionUtils.isEmpty(list)) {
+                checkState = CheckState.newState(405, PROJECT_PERMISSION_CODE_FAILED, PROJECT_PERMISSION_NAME_FAILED);
+            } else {
+                checkState = CheckState.newState(202, PROJECT_PERMISSION_CODE_SUCCESS, PROJECT_PERMISSION_NAME_SUCCESS);
+            }
         }
         context.response.setStatus(checkState);
     }
