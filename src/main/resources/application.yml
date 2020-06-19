@@ -170,6 +170,12 @@ spring:
         - Path=/rdupm/**
         filters:
         - StripPrefix=1
+      - id: hrds-qa
+        uri: lb://hrds-qa
+        predicates:
+        - Path=/rdqam/**
+        filters:
+        - StripPrefix=1
 #        - name: RequestRateLimiter
 #          args:
 #            redis-rate-limiter.replenishRate: 100
