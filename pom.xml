@@ -4,12 +4,12 @@
     <parent>
         <groupId>io.choerodon</groupId>
         <artifactId>choerodon-framework-parent</artifactId>
-        <version>0.17.0.RELEASE</version>
+        <version>0.17.1.RELEASE</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>hzero-gateway</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.23.1-SNAPSHOT</version>
     <name>hzero-gateway</name>
     <description>Demo project for Spring Boot</description>
 
