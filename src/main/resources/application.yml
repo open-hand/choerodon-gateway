@@ -387,6 +387,9 @@ hzero:
           - /hfle/lib/**
           - /*/lib/**
           - /**/webjars/**
+        internal-paths:
+          - /oauth/admin/*
+          - /v2/choerodon/api-docs
   ## 服务整体运维配置
   maintain:
     # 全局运维信息
