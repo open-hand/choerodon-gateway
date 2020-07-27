@@ -1,11 +1,14 @@
-include: https://api.choerodon.com.cn/devops/v1/projects/1529/ci_contents/pipelines/203d2af3-f16a-4eab-acb6-506cfb3e0e3b/content.yaml
+image: registry.cn-shanghai.aliyuncs.com/c7n/cibase:0.9.1
 
-#image: registry.cn-shanghai.aliyuncs.com/c7n/cibase:0.9.1
-#
-#stages:
-#  - build
+stages:
+  - build
 #  - release
 #
+build:
+  stage: build
+  script:
+    - rm -rf /.m2/repository/org/hzero
+
 #build backend:
 #  stage: build
 #  script:
