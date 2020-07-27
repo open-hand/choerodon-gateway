@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hzero.core.util.UrlUtils;
 import org.hzero.gateway.helper.config.GatewayHelperProperties;
 import org.hzero.gateway.helper.domain.PermissionCheckDTO;
 import org.hzero.gateway.helper.entity.CheckState;
 import org.hzero.gateway.helper.entity.PermissionDO;
 import org.hzero.gateway.helper.entity.RequestContext;
 import org.hzero.gateway.helper.service.CustomPermissionCheckService;
-import org.hzero.gateway.helper.util.UrlUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
