@@ -95,6 +95,12 @@ spring:
         - Path=/hcnf/**
         filters:
         - StripPrefix=1
+      - id: hmnt
+        uri: lb://hzero-monitor
+        predicates:
+        - Path=/hmnt/**
+        filters:
+        - StripPrefix=1
       - id: hwgr
         uri: lb://hzero-swagger
         predicates:
