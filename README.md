@@ -144,6 +144,7 @@ hzero:
     secret-key: hzero
 ```
 
+
 - `启动类配置`
 
 @EnableHZeroGateway是必须加上的注解，用于驱动网关服务的自动配置类，从而启用网关服务功能。
