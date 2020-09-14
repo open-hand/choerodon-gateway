@@ -48,8 +48,7 @@ spring:
   cloud:
     gateway:
       default-filters:
-      - SetRequestHeader=H-Request-From, gateway
-      - SetRequestHeader=H-Request-Encrypt, encrypt
+      - SetRequestHeader=H-Request-Encrypt, ${HZERO_REQUEST_ENCRYPT_MODE:encrypt}
       filter:
         secure-headers:
           frame-options: ${SECURE_HEADERS_FRAME_OPTIONS:allow-from http://hzeronf.saas.hand-china.com}
