@@ -9,7 +9,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>hzero-gateway</artifactId>
-    <version>0.23.1-SNAPSHOT</version>
+    <version>0.24.0-alpha.1.RELEASE</version>
     <name>hzero-gateway</name>
     <description>Demo project for Spring Boot</description>
 
