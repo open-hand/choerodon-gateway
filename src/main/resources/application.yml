@@ -356,6 +356,9 @@ hzero:
           - secretId: hzero
             secretKey: 537509248a3da7804d12905c102d14cd1bec000797a6178a7353a4c3ac23a0b3
       jwt-key: hzero # jwt的密钥
+      authenticate:
+        call-redis:
+          enable: false
       # 是否打印 JWT
       enabled-jwt-log: ${HZERO_GATEWAY_HELPER_ENABLE_JWT_LOG:false}
       # OAuth服务 context-path
