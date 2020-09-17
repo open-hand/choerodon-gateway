@@ -358,7 +358,7 @@ hzero:
       jwt-key: hzero # jwt的密钥
       authenticate:
         call-redis:
-          enable: false
+          enable: true
       # 是否打印 JWT
       enabled-jwt-log: ${HZERO_GATEWAY_HELPER_ENABLE_JWT_LOG:false}
       # OAuth服务 context-path
