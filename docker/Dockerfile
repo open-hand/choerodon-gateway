@@ -3,4 +3,4 @@ WORKDIR /choerodon
 COPY app.jar choerodon-gateway.jar
 RUN chown -R www-data:www-data /choerodon
 USER 33
-CMD java $JAVA_OPTS $SKYWALKING_OPTS -jar /choerodon/-gateway.jarchoerodon
+CMD java $JAVA_OPTS $SKYWALKING_OPTS -jar /choerodon/choerodon-gateway.jar
