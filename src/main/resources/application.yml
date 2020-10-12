@@ -1,6 +1,6 @@
 spring:
   application:
-    name: hzero-gateway
+    name: choerodon-gateway
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:mysql://db.hzero.org:3306/hzero_platform?useUnicode=true&characterEncoding=utf-8&useSSL=false}
     username: ${SPRING_DATASOURCE_USERNAME:hzero}
@@ -60,7 +60,7 @@ spring:
 #      - RemoveResponseHeader=X-Frame-Options
       routes:
       - id: hiam
-        uri: lb://hzero-iam
+        uri: lb://choerodon-iam
         predicates:
         - Path=/iam/**
         filters:
@@ -68,7 +68,7 @@ spring:
       # 兼容旧的外部组件（例如已经在集群管理中安装的prometheus或者sonarqube等）对base-service服务的调用,
       # 将 /base/ 开头的请求也路由到 iam 处理
       - id: old-base
-        uri: lb://hzero-iam
+        uri: lb://choerodon-iam
         predicates:
           - Path=/base/**
         filters:
@@ -87,75 +87,45 @@ spring:
 #              new org.hzero.gateway.ratelimit.dimension.RoleKeyResolver()
 #            )}"
       - id: hoth
-        uri: lb://hzero-oauth
+        uri: lb://choerodon-oauth
         predicates:
         - Path=/oauth/**
         filters:
         - PreserveHostHeader
-      - id: hcnf
-        uri: lb://hzero-config
-        predicates:
-        - Path=/hcnf/**
-        filters:
-        - StripPrefix=1
       - id: hmnt
-        uri: lb://hzero-monitor
+        uri: lb://choerodon-monitor
         predicates:
         - Path=/hmnt/**
         filters:
         - StripPrefix=1
       - id: hwgr
-        uri: lb://hzero-swagger
+        uri: lb://choerodon-swagger
         predicates:
         - Path=/swagger/**
         filters:
         - StripPrefix=1
       - id: hagd
-        uri: lb://hzero-asgard
+        uri: lb://choerodon-asgard
         predicates:
         - Path=/hagd/**
         filters:
         - StripPrefix=1
-      - id: hsgp
-        uri: lb://hzero-governance
-        predicates:
-        - Path=/hsgp/**
-        filters:
-        - StripPrefix=1
       - id: hpfm
-        uri: lb://hzero-platform
+        uri: lb://choerodon-platform
         predicates:
         - Path=/hpfm/**
         filters:
         - StripPrefix=1
       - id: hfle
-        uri: lb://hzero-file
+        uri: lb://choerodon-file
         predicates:
         - Path=/hfle/**
         filters:
         - StripPrefix=1
       - id: hmsg
-        uri: lb://hzero-message
+        uri: lb://choerodon-message
         predicates:
         - Path=/hmsg/**
-        filters:
-        - StripPrefix=1
-      - id: hsdr
-        uri: lb://hzero-scheduler
-        predicates:
-        - Path=/hsdr/**
-        filters:
-        - StripPrefix=1
-      - id: himp
-        uri: lb://hzero-import
-        predicates:
-        - Path=/himp/**
-        filters:
-        - StripPrefix=1
-      - id: hitf
-        uri: lb://hzero-interface
-        predicates:
-        - Path=/hitf/**
         filters:
         - StripPrefix=1
       - id: hrds-code-repo
@@ -195,62 +165,10 @@ spring:
 #              new org.hzero.gateway.ratelimit.dimension.UrlKeyResolver(\"/v1/{1}/invoke?namespace={2}&serverCode={3}&interfaceCode={4}\"),
 #              new org.hzero.gateway.ratelimit.dimension.RoleKeyResolver()
 #            )}"
-      - id: hwfl
-        uri: lb://hzero-workflow
-        predicates:
-        - Path=/hwfl/**
-        filters:
-        - StripPrefix=1
-      - id: hwfe
-        uri: lb://hzero-workflow-editor
-        predicates:
-        - Path=/hwfe/editor/**
-        filters:
-        - StripPrefix=1
-      - id: hdtt
-        uri: lb://hzero-transfer
-        predicates:
-        - Path=/hdtt/**
-        filters:
-        - StripPrefix=1
-      - id: hdtw
-        uri: lb://hzero-dw
-        predicates:
-        - Path=/hdtw/**
-        filters:
-        - StripPrefix=1
-      - id: hptl
-        uri: lb://hzero-portal
-        predicates:
-        - Path=/hptl/**
-        filters:
-        - StripPrefix=1
-      - id: hrpt
-        uri: lb://hzero-report
-        predicates:
-        - Path=/hrpt/**
-        filters:
-        - StripPrefix=1
-      - id: hwfp
-        uri: lb://hzero-workflow-plus
-        predicates:
-        - Path=/hwfp/**
-        filters:
-        - StripPrefix=1
-      - id: hpay
-        uri: lb://hzero-pay
-        predicates:
-        - Path=/hpay/**
-        filters:
-        - StripPrefix=1
       - id: hadm
-        uri: lb://hzero-admin
+        uri: lb://choerodon-admin
         predicates:
         - Path=/hadm/**
-      - id: hap
-        uri: lb://hzero-hap
-        predicates:
-        - Path=/hap/**
       - id: hdm
         uri: lb://data-migration
         predicates:
@@ -338,6 +256,25 @@ hystrix:
 
 
 hzero:
+  service:
+    platform:
+      name: cherodon-platform
+    oauth:
+      name: choerodon-oauth
+    iam:
+      name: choerodon-iam
+    file:
+      name: choerodon-file
+    message:
+      name: choerodon-message
+    admin:
+      name: choerodon-admin
+    swagger:
+      name: choerodon-swagger
+    gateway:
+      name: choerodon-gateway
+    monitor:
+      name: choerodon-monitor
   gateway:
     # 跨域配置
     cors:
