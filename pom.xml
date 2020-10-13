@@ -21,10 +21,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.hzero.starter</groupId>
-            <artifactId>hzero-starter-mybatis-mapper</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.hzero</groupId>
             <artifactId>hzero-gateway</artifactId>
             <exclusions>
