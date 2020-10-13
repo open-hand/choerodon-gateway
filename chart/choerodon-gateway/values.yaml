@@ -73,8 +73,10 @@ env:
     HZERO_GATEWAY_FILTER_COLLECT_SPAN_ENABLED: true
     # 是否打印 JWT
     HZERO_GATEWAY_HELPER_ENABLE_JWT_LOG: false
-
+    # 主键加密配置 encrypt(主键加密) to_string(主键变字符串类型) do_nothing(关闭加密)
+    HZERO_REQUEST_ENCRYPT_MODE: encrypt
     LOG_LEVEL: info
+    HZERO_GATEWAY_AUTHENTICATE_REDIS: true
 #    JAVA_OPTS: >-
 #      -Xms1024m
 #      -Xmx1536m
