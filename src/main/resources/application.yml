@@ -127,14 +127,14 @@ spring:
         - Path=/hmsg/**
         filters:
         - StripPrefix=1
-      - id: hrds-code-repo
-        uri: lb://hrds-code-repo
+      - id: rducm
+        uri: lb://code-repo-service
         predicates:
         - Path=/rducm/**
         filters:
         - StripPrefix=1
-      - id: hrds-doc-repo
-        uri: lb://hrds-doc-repo
+      - id: rdudm
+        uri: lb://doc-repo-service
         predicates:
         - Path=/rdudm/**
         filters:
