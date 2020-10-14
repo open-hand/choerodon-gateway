@@ -135,7 +135,7 @@ spring:
         filters:
         - StripPrefix=1
       - id: rdudm
-        uri: lb://hrds-doc-repo
+        uri: lb://doc-repo-service
         predicates:
         - Path=/rdudm/**
         filters:
