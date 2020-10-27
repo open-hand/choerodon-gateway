@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="io.choerodon.gateway.infra.mapper.ProjectUserMapper">
+<mapper namespace="io.choerodon.gateway.infra.mapper.ProjectPermissionMapper">
 
 
     <!-- 返回的 source_id 代表 成员分配的角色有此API的权限，返回角色的租户 -->
@@ -11,7 +11,7 @@
         FROM iam_member_role imr
         JOIN iam_role ir ON (imr.role_id = ir.id and ir.is_enabled = 1)
         JOIN iam_role_permission irp ON (irp.role_id = ir.id AND irp.type= 'PS')
-        JOIN fd_project_user fpu ON fpu.MEMBER_ROLE_ID = imr.id
+        JOIN fd_project_permission fpu ON fpu.MEMBER_ROLE_ID = imr.id
         AND fpu.PROJECT_ID = #{projectId}
         <!-- 限制权限集 -->
         JOIN iam_menu_permission imp ON imp.menu_id = irp.permission_id
