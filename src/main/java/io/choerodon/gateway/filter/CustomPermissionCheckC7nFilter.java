@@ -18,7 +18,7 @@ import org.springframework.util.CollectionUtils;
 
 import io.choerodon.core.iam.ResourceLevel;
 import io.choerodon.core.oauth.CustomUserDetails;
-import io.choerodon.gateway.infra.mapper.ProjectUserMapper;
+import io.choerodon.gateway.infra.mapper.ProjectPermissionMapper;
 
 /**
  * @author scp
@@ -35,11 +35,11 @@ public class CustomPermissionCheckC7nFilter implements CustomPermissionCheckServ
     private static final String PROJECT_PERMISSION_CODE_SUCCESS = "success.permission.projectPass";
 
     List<String> parameterProjectId;
-    private ProjectUserMapper projectUserMapper;
+    private ProjectPermissionMapper projectPermissionMapper;
     private boolean checkCurrentRole;
 
-    public CustomPermissionCheckC7nFilter(ProjectUserMapper projectUserMapper, GatewayHelperProperties properties) {
-        this.projectUserMapper = projectUserMapper;
+    public CustomPermissionCheckC7nFilter(ProjectPermissionMapper projectPermissionMapper, GatewayHelperProperties properties) {
+        this.projectPermissionMapper = projectPermissionMapper;
         this.checkCurrentRole = properties.getFilter().getCommonRequest().isCheckCurrentRole();
         this.parameterProjectId = properties.getFilter().getCommonRequest().getParameterProjectId();
     }
@@ -60,7 +60,8 @@ public class CustomPermissionCheckC7nFilter implements CustomPermissionCheckServ
         boolean lov = StringUtils.isNotEmpty(context.getLovCode());
         String sourceType;
         if (details.getClientId() != null) {
-            return;
+            memberId = details.getClientId();
+            memberType = "client";
         }
         if (details.getUserId() != null) {
             memberId = details.getUserId();
@@ -77,10 +78,10 @@ public class CustomPermissionCheckC7nFilter implements CustomPermissionCheckServ
         LOGGER.debug("Project Common request check: {}", queryDTO);
         CheckState checkState;
         // 组织管理员跳过项目层权限校验
-        if (projectUserMapper.isOrgAdministrator(tenantId, memberId)) {
+        if (projectPermissionMapper.isOrgAdministrator(tenantId, memberId)) {
             checkState = CheckState.newState(202, PROJECT_PERMISSION_CODE_SUCCESS, PROJECT_PERMISSION_NAME_SUCCESS);
         } else {
-            List<Long> list = projectUserMapper.selectSourceIdsByMemberAndRole(queryDTO, projectId);
+            List<Long> list = projectPermissionMapper.selectSourceIdsByMemberAndRole(queryDTO, projectId);
             if (CollectionUtils.isEmpty(list)) {
                 checkState = CheckState.newState(405, PROJECT_PERMISSION_CODE_FAILED, PROJECT_PERMISSION_NAME_FAILED);
             } else {

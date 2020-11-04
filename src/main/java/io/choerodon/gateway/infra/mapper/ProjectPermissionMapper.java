@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.hzero.gateway.helper.domain.PermissionCheckDTO;
 
-import io.choerodon.gateway.infra.dto.ProjectUserDTO;
+import io.choerodon.gateway.infra.dto.ProjectPermissionDTO;
 import io.choerodon.mybatis.common.BaseMapper;
 
 /**
@@ -13,7 +13,7 @@ import io.choerodon.mybatis.common.BaseMapper;
  * @date 2020/5/14
  * @description
  */
-public interface ProjectUserMapper extends BaseMapper<ProjectUserDTO> {
+public interface ProjectPermissionMapper extends BaseMapper<ProjectPermissionDTO> {
 
     List<Long> selectSourceIdsByMemberAndRole(@Param("query") PermissionCheckDTO query, @Param("projectId") Long projectId);
 

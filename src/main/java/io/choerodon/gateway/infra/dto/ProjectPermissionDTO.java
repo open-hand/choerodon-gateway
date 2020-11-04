@@ -14,8 +14,8 @@ import io.choerodon.mybatis.domain.AuditDomain;
  * @date 2020/4/16
  * @description
  */
-@Table(name = "fd_project_user")
-public class ProjectUserDTO extends AuditDomain {
+@Table(name = "fd_project_permission")
+public class ProjectPermissionDTO extends AuditDomain {
     @Id
     private Long id;
     @ApiModelProperty("用户id")
