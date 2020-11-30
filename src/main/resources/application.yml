@@ -202,6 +202,12 @@ spring:
         - Path=/devops/**
         filters:
         - StripPrefix=1
+      - id: market-service
+        uri: lb://market-service
+        predicates:
+        - Path=/market/**
+        filters:
+        - StripPrefix=1
 
 server:
   undertow:
