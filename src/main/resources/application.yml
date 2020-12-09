@@ -356,6 +356,7 @@ hzero:
           - /hfle/lib/**
           - /*/lib/**
           - /**/webjars/**
+          - /rdupm/v1/nexus/proxy/**
         internal-paths:
           - /oauth/admin/*
           - /v2/choerodon/api-docs
