@@ -57,7 +57,6 @@ public class CustomPermissionCheckC7nFilter implements CustomPermissionCheckServ
         List<Long> roleIds = null;
         Long tenantId = details.getTenantId();
         String permissionCode = permission.getCode();
-        boolean lov = StringUtils.isNotEmpty(context.getLovCode());
         String sourceType;
         if (details.getClientId() != null
                 && details.getClientName() != null) {
@@ -68,12 +67,7 @@ public class CustomPermissionCheckC7nFilter implements CustomPermissionCheckServ
             memberType = "user";
             roleIds = details.roleMergeIds();
         }
-        if (lov) {
-            permissionCode = context.getLovCode();
-            sourceType = null;
-        } else {
-            sourceType = StringUtils.equals(ResourceLevel.SITE.value(), permission.getFdLevel()) ? ResourceLevel.SITE.value() : ResourceLevel.ORGANIZATION.value();
-        }
+        sourceType = StringUtils.equals(ResourceLevel.SITE.value(), permission.getFdLevel()) ? ResourceLevel.SITE.value() : ResourceLevel.ORGANIZATION.value();
         PermissionCheckDTO queryDTO = new PermissionCheckDTO(memberId, memberType, tenantId, roleIds, permissionCode, sourceType, checkCurrentRole);
         LOGGER.debug("Project Common request check: {}", queryDTO);
         CheckState checkState;
