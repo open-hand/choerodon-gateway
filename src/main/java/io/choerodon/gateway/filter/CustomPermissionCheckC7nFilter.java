@@ -59,11 +59,11 @@ public class CustomPermissionCheckC7nFilter implements CustomPermissionCheckServ
         String permissionCode = permission.getCode();
         boolean lov = StringUtils.isNotEmpty(context.getLovCode());
         String sourceType;
-        if (details.getClientId() != null) {
+        if (details.getClientId() != null
+                && details.getClientName() != null) {
             memberId = details.getClientId();
             memberType = "client";
-        }
-        if (details.getUserId() != null) {
+        } else {
             memberId = details.getUserId();
             memberType = "user";
             roleIds = details.roleMergeIds();
