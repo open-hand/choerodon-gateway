@@ -196,6 +196,12 @@ spring:
         - Path=/wfpm/**
         filters:
         - StripPrefix=1
+      - id: ahworkflow
+        uri: lb://agile-hzero-workflow
+        predicates:
+        - Path=/ahworkflow/**
+        filters:
+        - StripPrefix=1
       - id: devops-service
         uri: lb://devops-service
         predicates:
