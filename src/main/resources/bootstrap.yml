@@ -44,7 +44,6 @@ eureka:
       defaultZone: ${EUREKA_DEFAULT_ZONE:http://dev.hzero.org:8000/eureka}
     # 拉取服务列表间隔时间
     registryFetchIntervalSeconds: 3
-    disable-delta: true
 ribbon:
 #  负载均衡器服务列表缓存
   ServerListRefreshInterval: 5000
