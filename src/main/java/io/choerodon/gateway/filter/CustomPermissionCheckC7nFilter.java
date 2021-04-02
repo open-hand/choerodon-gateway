@@ -72,7 +72,7 @@ public class CustomPermissionCheckC7nFilter implements CustomPermissionCheckServ
         LOGGER.debug("Project Common request check: {}", queryDTO);
         CheckState checkState;
         // 组织管理员跳过项目层权限校验
-        if (projectPermissionMapper.isOrgAdministrator(tenantId, memberId)) {
+        if (projectPermissionMapper.isOrgAdministrator(tenantId, memberId, memberType)) {
             checkState = CheckState.newState(202, PROJECT_PERMISSION_CODE_SUCCESS, PROJECT_PERMISSION_NAME_SUCCESS);
         } else {
             List<Long> list = projectPermissionMapper.selectSourceIdsByMemberAndRole(queryDTO, projectId);
