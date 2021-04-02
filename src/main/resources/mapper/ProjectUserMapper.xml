@@ -50,7 +50,7 @@
             left join iam_label il ON hlr.label_id = il.id
         where il.name = 'TENANT_ADMIN'
               and imr.source_type = 'organization'
-              and imr.member_type = 'user'
+              and imr.member_type = #{memberType}
               and imr.source_id = #{organizationId}
               and imr.member_id = #{userId}
     </select>
