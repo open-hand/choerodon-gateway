@@ -25,5 +25,6 @@ public interface ProjectPermissionMapper extends BaseMapper<ProjectPermissionDTO
      * @return 返回true 表示分配了组织管理员角色;否则, 表示未分配
      */
     Boolean isOrgAdministrator(@Param("organizationId") Long organizationId,
-                               @Param("userId") Long userId);
+                               @Param("userId") Long userId,
+                               @Param("memberType") String memberType);
 }

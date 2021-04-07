@@ -190,10 +190,10 @@ spring:
         - Path=/test/**
         filters:
         - StripPrefix=1
-      - id: wfpm
-        uri: lb://waterfall-pm-service
+      - id: cwkf
+        uri: lb://workflow-service
         predicates:
-        - Path=/wfpm/**
+        - Path=/cwkf/**
         filters:
         - StripPrefix=1
       - id: devops-service

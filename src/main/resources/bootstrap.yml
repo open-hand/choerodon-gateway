@@ -37,14 +37,13 @@ eureka:
     leaseExpirationDurationInSeconds: 9
     # 服务的一些元数据信息
     metadata-map:
-      VERSION: 0.24.0-alpha.1.RELEASE
+      VERSION: ${CHART_VERSION:0.24.0-alpha.2-SNAPSHOT}
   client:
     serviceUrl:
       # 注册中心地址
       defaultZone: ${EUREKA_DEFAULT_ZONE:http://dev.hzero.org:8000/eureka}
     # 拉取服务列表间隔时间
     registryFetchIntervalSeconds: 3
-    disable-delta: true
 ribbon:
 #  负载均衡器服务列表缓存
   ServerListRefreshInterval: 5000
