@@ -318,6 +318,7 @@ hzero:
           # 是否统计API访问情况
           enabled: ${HZERO_GATEWAY_FILTER_COLLECT_SPAN_ENABLED:false}
         common-request:
+          check-current-role: false
           # 租户级API是否必须检查租户参数
           check-tenant: ${HZERO_GATEWAY_FILTER_COMMON_REQUEST_CHECK_ORGANIZATION:true}
           # 项目级API是否必须检查项目参数
