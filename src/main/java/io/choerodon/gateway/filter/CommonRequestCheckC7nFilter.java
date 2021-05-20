@@ -36,6 +36,7 @@ public class CommonRequestCheckC7nFilter extends CommonRequestCheckFilter {
     @PostConstruct
     public void init() {
         this.parameterTenantId = helperProperties.getFilter().getCommonRequest().getParameterTenantId();
+        super.init();
     }
 
     @Override
@@ -45,8 +46,8 @@ public class CommonRequestCheckC7nFilter extends CommonRequestCheckFilter {
         Long tenantId = getTenantId(context);
         if (tenantId != null) {
             details.setTenantId(tenantId);
+            context.setCustomUserDetails(details);
         }
-        context.setCustomUserDetails(details);
         return super.run(context);
     }
 
