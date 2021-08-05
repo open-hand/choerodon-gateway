@@ -209,11 +209,11 @@ spring:
         filters:
         - StripPrefix=1
       - id: governance-service
-          uri: lb://governance-service
-          predicates:
-            - Path=/governance/**
-          filters:
-            - StripPrefix=1
+        uri: lb://governance-service
+        predicates:
+        - Path=/governance/**
+        filters:
+        - StripPrefix=1
 
 server:
   undertow:
