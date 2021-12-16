@@ -214,12 +214,6 @@ spring:
         - Path=/governance/**
         filters:
         - StripPrefix=1
-      - id: nexus-proxy
-        uri: ${CHOERODON_NEXUS3_DOMIAN:https://nexus3.choerodon.com.cn}
-        predicates:
-          - Path=/rdupm/v1/nexus/proxy/**
-        filters:
-          - StripPrefix=1
 
 server:
   undertow:
