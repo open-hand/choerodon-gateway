@@ -34,6 +34,10 @@ spring:
     host: ${SPRING_REDIS_HOST:redis.hzero.org}
     port: ${SPRING_REDIS_PORT:6379}
     database: ${SPRING_REDIS_DATABASE:4}
+    # Redis连接超时时间
+    connect-timeout: ${SPRING_REDIS_CONNECT_TIMEOUT:2000}
+    # Redis读取超时时间
+    timeout: ${SPRING_REDIS_READ_TIMEOUT:5000}
     lettuce:
       pool:
         # 资源池中最大连接数
@@ -48,7 +52,12 @@ spring:
   cloud:
     gateway:
       default-filters:
-      - SetRequestHeader=H-Request-Encrypt, ${HZERO_REQUEST_ENCRYPT_MODE:encrypt}
+        # 开启主键加密 可选值 encrypt（主键加密）、to_string（主键变字符串类型）、do_nothing（关闭加密）
+        - SetRequestHeader=H-Request-Encrypt, ${HZERO_REQUEST_ENCRYPT_MODE:encrypt}
+        # 文件下载需要加上该请求头
+        - SetResponseHeader=Access-Control-Expose-Headers, Content-Disposition
+        # 过滤重复的请求头
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin Vary, RETAIN_UNIQUE
       filter:
         secure-headers:
           frame-options: ${SECURE_HEADERS_FRAME_OPTIONS:allow-from http://hzeronf.saas.hand-china.com}
@@ -214,23 +223,32 @@ spring:
         - Path=/governance/**
         filters:
         - StripPrefix=1
+  web:
+    resources:
+      # 资源缓存时间，单位秒
+      cache:
+        period: 3600
+      chain:
+        # 开启压缩
+        compressed: true
+        # 启用缓存
+        cache: true
 
 server:
   undertow:
-    # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接
-    # 默认值为8，建议设置每个CPU核心一个线程
-    io-threads: ${SERVER_UNDERTOW_IO_THREADS:4}
-    # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程
-    # 默认等于 io-threads*8，它的值设置取决于系统的负载，可适当调大该值
-    worker-threads: ${SERVER_UNDERTOW_WORKER_THREADS:128}
+    threads:
+      # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接
+      # 默认值为8，建议设置每个CPU核心一个线程
+      io: ${SERVER_UNDERTOW_IO_THREADS:4}
+      # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程
+      # 默认等于 io-threads*8，它的值设置取决于系统的负载，可适当调大该值
+      worker: ${SERVER_UNDERTOW_WORKER_THREADS:128}
     # 每块buffer的空间大小，越小空间被利用越充分
     # 不要设置太大，以免影响其他应用，合适即可
     buffer-size: ${SERVER_UNDERTOW_BUFFER_SIZE:1024}
-    # 是否分配的直接内存(NIO直接分配的堆外内存)
-    # 默认false
+    # 是否分配的直接内存(NIO直接分配的堆外内存)。默认false
     direct-buffers: true
-    # HTTP POST请求最大的大小
-    # 默认0，无限制，可设置10M
+    # HTTP POST请求最大的大小。默认0，无限制，可设置10M
     max-http-post-size: 10485760
 
 mybatis:
@@ -246,31 +264,27 @@ mybatis:
       meta-provider-redis-expire: 600000
 
 feign:
-  hystrix:
-    enabled: false
-
-ribbon:
-  ReadTimeout: ${RIBBON_READ_TIMEOUT:30000}
-  ConnectTimeout: ${RIBBON_CONNECT_TIMEOUT:6000}
-  httpclient:
-    enabled: false
-  okhttp:
-    enabled: true
-
-hystrix:
-  stream:
-    queue:
-      enabled: true
-  command:
-    default:
-      execution:
-        timeout:
-          enabled: true
-        isolation:
-          thread:
-            timeoutInMilliseconds: ${HYSTRIX_COMMAND_TIMEOUT_IN_MILLISECONDS:90000}
-  shareSecurityContext: true
-
+  circuitbreaker:
+    # 启用断路器
+    enabled: ${FEIGN_CIRCUITBREAKER_ENABLED:true}
+  # 请求压缩配置
+  compression:
+    request:
+      # 配置请求GZIP压缩
+      enabled: ${FEIGN_COMPRESSION_REQUEST_ENABLED:true}
+      # 配置压缩数据大小的下限
+      min-request-size: ${FEIGN_COMPRESSION_REQUEST_MIN_REQUEST_SIZE:2048}
+  # Feign客户端配置
+  client:
+    config:
+      # Feign客户端默认配置
+      default:
+        # 连接超时
+        connectTimeout: ${FEIGN_CLIENT_CONFIG_DEFAULT_CONNECT_TIMEOUT:2000}
+        # 读取超时
+        readTimeout: ${FEIGN_CLIENT_CONFIG_DEFAULT_READ_TIMEOUT:5000}
+        # Feign日志级别：NONE/BASIC/HEADERS/FULL
+        loggerLevel: ${FEIGN_CLIENT_CONFIG_DEFAULT_LOGGER_LEVEL:FULL}
 
 hzero:
   service:
@@ -384,5 +398,10 @@ hzero:
 
 logging:
   level:
-    io.choerodon: ${LOG_LEVEL:debug}
-    org.hzero: ${LOG_LEVEL:debug}
+    org.springframework.cloud: info
+    io.github.resilience4j: info
+    com.netflix.discovery: warn
+    org.hzero.boot.platform.lov: info
+    org.apache.ibatis: ${LOG_LEVEL:info}
+    io.choerodon: ${LOG_LEVEL:info}
+    org.hzero: ${LOG_LEVEL:info}

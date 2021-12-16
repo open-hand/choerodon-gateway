@@ -62,7 +62,18 @@ env:
     EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://register-server:8000/eureka/
     
     EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
-
+    # Redis连接超时时间
+    SPRING_REDIS_CONNECT_TIMEOUT: 2000
+    # Redis读取超时时间
+    SPRING_REDIS_READ_TIMEOUT: 5000
+    # 是否重试
+    SPRING_CLOUD_LB_RETRY_ENABLED: false
+    # 重试下一个实例的次数
+    SPRING_CLOUD_LB_RETRY_NEXT: 1
+    # 重试同一个实例的次数
+    SPRING_CLOUD_LB_RETRY_SAME: 0
+    # LB 中缓存实例的过期时间
+    SPRING_CLOUD_LB_CACHE_TTL: 10s
     # 项目级API是否必须检查项目参数
     HZERO_GATEWAY_FILTER_COMMON_REQUEST_CHECK_PROJECT: true
     # 组织级API是否必须检查组织参数
