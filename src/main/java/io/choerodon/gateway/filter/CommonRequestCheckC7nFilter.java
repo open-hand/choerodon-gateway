@@ -41,7 +41,6 @@ public class CommonRequestCheckC7nFilter extends CommonRequestCheckFilter {
 
     @Override
     public boolean run(RequestContext context) {
-        LOGGER.info("===================================c7n CommonRequestCheckC7nFilter=================");
         CustomUserDetails details = context.getCustomUserDetails();
         Long tenantId = getTenantId(context);
         if (tenantId != null) {

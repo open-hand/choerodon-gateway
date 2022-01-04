@@ -62,7 +62,18 @@ env:
     EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://register-server:8000/eureka/
     
     EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
-
+    # Redis连接超时时间
+    SPRING_REDIS_CONNECT_TIMEOUT: 2000
+    # Redis读取超时时间
+    SPRING_REDIS_READ_TIMEOUT: 5000
+    # 是否重试
+    SPRING_CLOUD_LB_RETRY_ENABLED: false
+    # 重试下一个实例的次数
+    SPRING_CLOUD_LB_RETRY_NEXT: 1
+    # 重试同一个实例的次数
+    SPRING_CLOUD_LB_RETRY_SAME: 0
+    # LB 中缓存实例的过期时间
+    SPRING_CLOUD_LB_CACHE_TTL: 10s
     # 项目级API是否必须检查项目参数
     HZERO_GATEWAY_FILTER_COMMON_REQUEST_CHECK_PROJECT: true
     # 组织级API是否必须检查组织参数
@@ -77,9 +88,10 @@ env:
     HZERO_REQUEST_ENCRYPT_MODE: encrypt
     LOG_LEVEL: info
     HZERO_GATEWAY_AUTHENTICATE_REDIS: true
-#    JAVA_OPTS: >-
-#      -Xms1024m
-#      -Xmx1536m
+
+    # 百分比使用物理内存，预留一部分用于堆外内存以及外部程序
+    JAVA_OPTS: >-
+      -XX:MaxRAMPercentage=80.0
 
     ## Skywalking 配置参数
     # SKYWALKING_OPTS: >-
