@@ -1,5 +1,6 @@
 package org.hzero.gateway.filter;
 
+import org.hzero.gateway.filter.metric.RequestCountRules;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -17,6 +18,9 @@ import reactor.core.publisher.Mono;
 public class IpCheckedFilter implements WebFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IpCheckedFilter.class);
+
+    public IpCheckedFilter(RequestCountRules requestCountRules) {
+    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
