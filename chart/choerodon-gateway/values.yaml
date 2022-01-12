@@ -91,7 +91,12 @@ env:
 
     # 百分比使用物理内存，预留一部分用于堆外内存以及外部程序
     JAVA_OPTS: >-
-      -XX:MaxRAMPercentage=80.0
+      -XX:MaxRAMPercentage=90.0
+
+    REACTOR_NETTY_NATIVE: false
+    REACTOR_NETTY_IOSELECTCOUNT: 6
+    REACTOR_NETTY_IOWORKERCOUNT: 12
+    REACTOR_NETTY_POOL_MAXCONNECTIONS: 100
 
     ## Skywalking 配置参数
     # SKYWALKING_OPTS: >-
