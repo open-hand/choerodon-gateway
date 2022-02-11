@@ -9,7 +9,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>choerodon-gateway</artifactId>
-    <version>release-1.2.0.RELEASE</version>
+    <version>1.2.1.RELEASE</version>
     <name>choerodon-gateway</name>
     <description>Demo project for Spring Boot</description>
 
