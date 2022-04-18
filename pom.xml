@@ -32,10 +32,6 @@
                     <groupId>org.hzero.starter</groupId>
                     <artifactId>hzero-starter-dynamic-route</artifactId>
                 </exclusion>
-                <exclusion>
-                    <artifactId>spring-cloud-starter-gateway</artifactId>
-                    <groupId>org.springframework.cloud</groupId>
-                </exclusion>
             </exclusions>
         </dependency>
 
