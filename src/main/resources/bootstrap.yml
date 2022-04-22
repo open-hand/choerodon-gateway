@@ -7,6 +7,9 @@ management:
     web:
       exposure:
         include: '*'
+  endpoint:
+    gateway:
+      enabled: false
 
 spring:
   profiles:
